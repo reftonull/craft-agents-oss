@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -e
+
+sh scripts/pre-commit-ios-format.sh

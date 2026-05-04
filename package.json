@@ -90,6 +90,8 @@
     "marketing:build": "vite build --config apps/marketing/vite.config.ts",
     "marketing:preview": "vite preview --config apps/marketing/vite.config.ts",
     "docs:dev": "cd apps/online-docs && npm install && npx mintlify dev",
+    "ios:format": "cd apps/ios && swiftformat .",
+    "ios:format:check": "cd apps/ios && swiftformat --lint .",
     "build": "bun run scripts/build.ts",
     "release": "bun run scripts/release.ts",
     "check-version": "bun run scripts/check-version.ts",

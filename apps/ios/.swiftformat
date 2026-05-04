@@ -1,0 +1,18 @@
+# SwiftFormat configuration for Agents Mobile
+--minversion 0.56.4
+--swiftversion 6.0
+
+# Avoid formatting generated / dependency artifacts
+--exclude .tuist-bin,Tuist/.build,Tuist/Dependencies,DerivedData
+
+# Match the existing code style
+--indent 2
+--wraparguments before-first
+--wrapparameters before-first
+--wrapcollections before-first
+--semicolons never
+--stripunusedargs closure-only
+--binarygrouping none
+--octalgrouping none
+--decimalgrouping none
+--hexgrouping none
