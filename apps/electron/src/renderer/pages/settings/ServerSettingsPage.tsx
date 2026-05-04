@@ -1,8 +1,8 @@
 /**
  * ServerSettingsPage
  *
- * Configure the Electron app to act as a remote server,
- * accessible from other machines on the network.
+ * Configure the Electron app's embedded server so native companion
+ * clients can connect to this running desktop process.
  */
 
 import { useState, useEffect, useCallback } from 'react'

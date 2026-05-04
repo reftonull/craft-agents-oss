@@ -39,6 +39,22 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # IntelliJ based IDEs
 .idea
 
+# Xcode / Tuist generated files
+*.xcodeproj
+*.xcworkspace
+DerivedData/
+apps/ios/Derived/
+*.xcresult
+*.profraw
+
+# Tuist caches / generated dependency artifacts
+.tuist-cache/
+.tuist-legacy-cache/
+apps/ios/.tuist-bin/
+apps/ios/Tuist/.build/
+apps/ios/Tuist/Dependencies/
+apps/ios/Tuist/Package.resolved
+
 # Python bytecode
 __pycache__/
 *.pyc
@@ -57,6 +73,9 @@ pnpm-lock.yaml
 
 # Craft Agent local data (sessions, credentials, config)
 .craft-agent/
+
+# FlowDeck local data
+.flowdeck/
 
 # SSH keys and secrets
 *.pem
