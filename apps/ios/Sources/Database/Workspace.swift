@@ -1,22 +1,6 @@
 import Foundation
 import SQLiteData
 
-public struct Pairing: Codable, Equatable, Sendable {
-  public var token: String
-  public var url: URL
-  public var workspaceID: String
-
-  public init(
-    token: String,
-    url: URL,
-    workspaceID: String
-  ) {
-    self.token = token
-    self.url = url
-    self.workspaceID = workspaceID
-  }
-}
-
 @Table
 public struct Workspace: Codable, Equatable, Identifiable, Sendable {
   public let id: UUID
@@ -76,6 +60,10 @@ public struct Workspace: Codable, Equatable, Identifiable, Sendable {
     )
   }
 
+  public var serverWebSocketURL: URL? {
+    URL(string: serverURL)
+  }
+
   public static func normalizedServerURLString(_ url: URL) -> String {
     guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
       return url.absoluteString
@@ -96,6 +84,18 @@ public struct Workspace: Codable, Equatable, Identifiable, Sendable {
     }
 
     return components.url?.absoluteString ?? url.absoluteString
+  }
+}
+
+public extension [Workspace] {
+  func sortedByFallbackPriority() -> Self {
+    sorted { lhs, rhs in
+      let lhsDate = lhs.lastOpenedAt ?? lhs.updatedAt
+      let rhsDate = rhs.lastOpenedAt ?? rhs.updatedAt
+      if lhsDate != rhsDate { return lhsDate > rhsDate }
+      if lhs.displayName != rhs.displayName { return lhs.displayName < rhs.displayName }
+      return lhs.id.uuidString < rhs.id.uuidString
+    }
   }
 }
 

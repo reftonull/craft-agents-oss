@@ -22,7 +22,15 @@ final class TabViewController: UITabBarController {
 
   private func configureTabs() {
     let sessionsStore = store.scope(state: \.sessions, action: \.sessions)
-    let sessions = UINavigationController(rootViewController: SessionsViewController(store: sessionsStore))
+    let sessionsViewController = SessionsViewController(store: sessionsStore)
+    sessionsViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
+      title: "Logout",
+      style: .plain,
+      target: self,
+      action: #selector(logoutButtonTapped)
+    )
+
+    let sessions = UINavigationController(rootViewController: sessionsViewController)
     sessions.tabBarItem = UITabBarItem(
       title: "Sessions",
       image: UIImage(systemName: "tray.full"),
@@ -31,5 +39,9 @@ final class TabViewController: UITabBarController {
 
     viewControllers = [sessions]
     selectedIndex = 0
+  }
+
+  @objc private func logoutButtonTapped() {
+    store.send(.logoutButtonTapped)
   }
 }

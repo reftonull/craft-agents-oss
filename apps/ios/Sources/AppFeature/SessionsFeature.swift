@@ -8,14 +8,14 @@ import RPCClient
 struct SessionsFeature {
   struct State {
     var list: ListState = .notLoaded
-    var pairing: Pairing
+    var workspace: Workspace
 
     init(
       list: ListState = .notLoaded,
-      pairing: Pairing
+      workspace: Workspace
     ) {
       self.list = list
-      self.pairing = pairing
+      self.workspace = workspace
     }
   }
 
@@ -66,15 +66,9 @@ struct SessionsFeature {
   }
 
   enum Action {
-    case delegate(Delegate)
     case refreshButtonTapped
-    case repairButtonTapped
     case sessionsResponse(Result<[RemoteSession], Failure>)
     case task
-
-    enum Delegate: Equatable {
-      case repairRequested
-    }
   }
 
   @Dependency(\.rpcClient) var rpcClient
@@ -83,24 +77,16 @@ struct SessionsFeature {
   var body: some Feature {
     Update { state, action in
       switch action {
-      case .delegate:
-        break
-
       case .refreshButtonTapped:
         switch state.list {
         case let .loaded(loaded), let .refreshFailed(loaded, _):
           state.list = .refreshing(loaded)
-          loadSessions(pairing: state.pairing)
+          loadSessions(workspace: state.workspace)
         case .failed, .notLoaded:
           state.list = .loading
-          loadSessions(pairing: state.pairing)
+          loadSessions(workspace: state.workspace)
         case .loading, .refreshing:
           break
-        }
-
-      case .repairButtonTapped:
-        store.addTask {
-          _ = try? store.send(.delegate(.repairRequested))
         }
 
       case let .sessionsResponse(.failure(failure)):
@@ -118,7 +104,7 @@ struct SessionsFeature {
         switch state.list {
         case .failed, .notLoaded:
           state.list = .loading
-          loadSessions(pairing: state.pairing)
+          loadSessions(workspace: state.workspace)
         case .loaded, .loading, .refreshing, .refreshFailed:
           break
         }
@@ -126,15 +112,20 @@ struct SessionsFeature {
     }
   }
 
-  private func loadSessions(pairing: Pairing) {
+  private func loadSessions(workspace: Workspace) {
     store.addTask(id: loadTaskID) {
+      guard let serverURL = workspace.serverWebSocketURL else {
+        try store.send(.sessionsResponse(.failure(.connection("Workspace has an invalid server URL."))))
+        return
+      }
+
       var connection: (any RPCConnection)?
       let response: Result<[RemoteSession], Failure>
       do {
         let workspaceConnection = try await rpcClient.connect(RPCConnectionRequest(
-          url: pairing.url,
-          token: pairing.token,
-          workspaceID: pairing.workspaceID
+          url: serverURL,
+          token: workspace.tokenReference,
+          workspaceID: workspace.remoteWorkspaceID
         ))
         connection = workspaceConnection
         let sessions = try await workspaceConnection.invoke(

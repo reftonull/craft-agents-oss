@@ -1,7 +1,7 @@
 import ComposableArchitecture2
 import ConnectionFeature
-import Observation
 import UIKit
+import UIKitNavigation
 
 final class AppViewController: UIViewController {
   private enum PresentedRoute: Equatable {
@@ -26,16 +26,8 @@ final class AppViewController: UIViewController {
     super.viewDidLoad()
 
     view.backgroundColor = .systemBackground
-    observeStore()
-  }
-
-  private func observeStore() {
-    withObservationTracking {
-      render()
-    } onChange: { [weak self] in
-      Task { @MainActor in
-        self?.observeStore()
-      }
+    observe { [weak self] in
+      self?.render()
     }
   }
 

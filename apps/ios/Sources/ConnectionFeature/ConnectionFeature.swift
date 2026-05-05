@@ -2,19 +2,24 @@ import ComposableArchitecture2
 import Database
 import Foundation
 import RPCClient
+import Sharing
+import SQLiteData
 
 @Feature
 public struct ConnectionFeature {
   public struct State {
     public var form: Form
     public var phase: Phase
+    @Shared(.agentsMobileSelectedWorkspaceID) public var selectedWorkspaceID: Workspace.ID?
 
     public init(
       form: Form = Form(),
-      phase: Phase = .idle
+      phase: Phase = .idle,
+      selectedWorkspaceID: Shared<Workspace.ID?> = Shared(.agentsMobileSelectedWorkspaceID)
     ) {
       self.form = form
       self.phase = phase
+      _selectedWorkspaceID = selectedWorkspaceID
     }
 
     var canConnect: Bool {
@@ -74,19 +79,17 @@ public struct ConnectionFeature {
 
   public enum Action {
     case connectButtonTapped
-    case delegate(Delegate)
-    case pairingResponse(Result<Pairing, Failure>)
+    case connectionResponse(Result<Workspace, Failure>)
     case phaseChanged(Phase)
     case tokenChanged(String)
     case urlChanged(String)
     case workspaceIDChanged(String)
-
-    public enum Delegate: Equatable {
-      case pairingCompleted(Pairing)
-    }
   }
 
+  @Dependency(\.date.now) var now
+  @Dependency(\.defaultDatabase) var database
   @Dependency(\.rpcClient) var rpcClient
+  @Dependency(\.uuid) var uuid
   @StoreTaskID var connectionTaskID
 
   public init() {}
@@ -129,7 +132,12 @@ public struct ConnectionFeature {
               )
               try store.send(.phaseChanged(.connecting(.selectingWorkspace(workspaceCount: workspaces.count))))
 
-              let selectedWorkspaceID = request.requestedWorkspaceID ?? workspaces.first?.id
+              let selectedRemoteWorkspace = if let requestedWorkspaceID = request.requestedWorkspaceID {
+                workspaces.first { $0.id == requestedWorkspaceID }
+              } else {
+                workspaces.first
+              }
+              let selectedWorkspaceID = request.requestedWorkspaceID ?? selectedRemoteWorkspace?.id
               guard let selectedWorkspaceID, !selectedWorkspaceID.isEmpty else {
                 throw Failure.noWorkspaces
               }
@@ -164,37 +172,44 @@ public struct ConnectionFeature {
               await workspace.close()
               workspaceConnection = nil
 
-              try store.send(.pairingResponse(.success(Pairing(
-                token: request.token,
-                url: request.url,
-                workspaceID: selectedWorkspaceID
-              ))))
+              let displayName = selectedRemoteWorkspace?.recognizableDisplayName ?? selectedWorkspaceID
+              let workspaceRecord = Workspace(
+                id: uuid(),
+                remoteWorkspaceID: selectedWorkspaceID,
+                displayName: displayName,
+                serverURL: request.url,
+                tokenReference: request.token,
+                remoteSlug: selectedRemoteWorkspace?.slug,
+                createdAt: now,
+                updatedAt: now,
+                lastOpenedAt: now
+              )
+              try await database.write { db in
+                try Workspace.insert { workspaceRecord }.execute(db)
+              }
+
+              try store.send(.connectionResponse(.success(workspaceRecord)))
             } catch is CancellationError {
               if let workspaceConnection { await workspaceConnection.close() }
               if let serverConnection { await serverConnection.close() }
             } catch let failure as Failure {
               if let workspaceConnection { await workspaceConnection.close() }
               if let serverConnection { await serverConnection.close() }
-              _ = try? store.send(.pairingResponse(.failure(failure)))
+              _ = try? store.send(.connectionResponse(.failure(failure)))
             } catch {
               if let workspaceConnection { await workspaceConnection.close() }
               if let serverConnection { await serverConnection.close() }
-              _ = try? store.send(.pairingResponse(.failure(.connection(Self.describe(error)))))
+              _ = try? store.send(.connectionResponse(.failure(.connection(Self.describe(error)))))
             }
           }
         }
 
-      case .delegate:
-        break
-
-      case let .pairingResponse(.failure(failure)):
+      case let .connectionResponse(.failure(failure)):
         state.phase = .failed(failure)
 
-      case let .pairingResponse(.success(pairing)):
+      case let .connectionResponse(.success(workspace)):
         state.phase = .idle
-        store.addTask {
-          _ = try? store.send(.delegate(.pairingCompleted(pairing)))
-        }
+        state.$selectedWorkspaceID.withLock { $0 = workspace.id }
 
       case let .phaseChanged(phase):
         state.phase = phase
@@ -332,6 +347,16 @@ extension ConnectionFeature.Phase {
     case let .failed(failure):
       failure.message
     }
+  }
+}
+
+private extension RemoteWorkspace {
+  var recognizableDisplayName: String {
+    let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+    if !trimmedName.isEmpty { return trimmedName }
+    let trimmedSlug = slug.trimmingCharacters(in: .whitespacesAndNewlines)
+    if !trimmedSlug.isEmpty { return trimmedSlug }
+    return id
   }
 }
 

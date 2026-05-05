@@ -2,6 +2,7 @@ import ComposableArchitecture2
 @testable import ConnectionFeature
 import Database
 import Foundation
+import Sharing
 import Testing
 
 @Suite("ConnectionFeature")
@@ -43,6 +44,53 @@ struct ConnectionFeatureTests {
     await store.send(.connectButtonTapped) {
       $0.phase = .failed(.missingToken)
     }
+  }
+
+  @Test
+  func `invalid connection details preserve setup with recoverable error state`() async {
+    let form = ConnectionFeature.Form(
+      token: "secret-token",
+      urlString: "ftp://desktop.local:9100",
+      workspaceID: ""
+    )
+    guard case let .failure(expectedFailure) = ConnectionFeature.validatedRequest(from: form) else {
+      Issue.record("Expected invalid connection details to fail validation")
+      return
+    }
+    let store = await TestStoreActor(initialState: ConnectionFeature.State(form: form)) {
+      ConnectionFeature()
+    }
+
+    await store.send(.connectButtonTapped) {
+      $0.phase = .failed(expectedFailure)
+    }
+  }
+
+  @Test
+  func `successful connection response selects saved workspace`() async throws {
+    let workspace = try Workspace(
+      id: #require(UUID(uuidString: "00000000-0000-0000-0000-000000000301")),
+      remoteWorkspaceID: "workspace-1",
+      displayName: "Personal",
+      serverURL: "ws://desktop.local:9100",
+      tokenReference: "secret-token",
+      createdAt: Date(timeIntervalSince1970: 1000),
+      updatedAt: Date(timeIntervalSince1970: 1000),
+      lastOpenedAt: Date(timeIntervalSince1970: 1000)
+    )
+    @Shared(value: nil) var selectedWorkspaceID: Workspace.ID?
+    let store = await TestStoreActor(initialState: ConnectionFeature.State(
+      phase: .connecting(.verifyingSessions(workspaceID: "workspace-1")),
+      selectedWorkspaceID: $selectedWorkspaceID
+    )) {
+      ConnectionFeature()
+    }
+
+    await store.send(.connectionResponse(.success(workspace))) {
+      $0.phase = .idle
+      $0.selectedWorkspaceID = workspace.id
+    }
+    #expect(selectedWorkspaceID == workspace.id)
   }
 
   @Test

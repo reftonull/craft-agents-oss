@@ -77,13 +77,6 @@ final class SessionsViewController: UIViewController {
     let count = store.list.sessions.count
     statusLabel.text = statusText(sessionCount: count)
     navigationItem.rightBarButtonItem?.isEnabled = !store.list.isLoading
-    navigationItem.leftBarButtonItem = UIBarButtonItem(
-      title: pairingActionTitle,
-      style: .plain,
-      target: self,
-      action: #selector(pairingActionButtonTapped)
-    )
-
     if store.list.isLoading, !tableView.refreshControl!.isRefreshing, !store.list.sessions.isEmpty {
       tableView.refreshControl?.beginRefreshing()
     } else if !store.list.isLoading {
@@ -96,11 +89,11 @@ final class SessionsViewController: UIViewController {
   private func statusText(sessionCount: Int) -> String {
     switch store.list {
     case .notLoaded:
-      "Ready to load sessions from workspace \(store.pairing.workspaceID)."
+      "Ready to load sessions from workspace \(store.workspace.displayName)."
     case .loading:
-      "Loading sessions from workspace \(store.pairing.workspaceID)…"
+      "Loading sessions from workspace \(store.workspace.displayName)…"
     case .loaded:
-      "Connected to workspace \(store.pairing.workspaceID). \(sessionCount) session\(sessionCount == 1 ? "" : "s") available."
+      "Connected to workspace \(store.workspace.displayName). \(sessionCount) session\(sessionCount == 1 ? "" : "s") available."
     case .refreshing:
       "Refreshing \(sessionCount) session\(sessionCount == 1 ? "" : "s")…"
     case let .failed(failure):
@@ -112,19 +105,6 @@ final class SessionsViewController: UIViewController {
 
   @objc private func refreshButtonTapped() {
     store.send(.refreshButtonTapped)
-  }
-
-  private var pairingActionTitle: String {
-    switch store.list {
-    case .failed:
-      "Re-pair"
-    case .loaded, .loading, .notLoaded, .refreshFailed, .refreshing:
-      "Logout"
-    }
-  }
-
-  @objc private func pairingActionButtonTapped() {
-    store.send(.repairButtonTapped)
   }
 }
 
@@ -148,11 +128,11 @@ extension SessionsViewController: UITableViewDataSource {
       return loadingCell()
 
     case let .failed(failure):
-      return errorCell(message: failure.message, pairingActionTitle: pairingActionTitle)
+      return errorCell(message: failure.message)
 
     case let .refreshFailed(loaded, failure):
       if loaded.sessions.isEmpty {
-        return errorCell(message: failure.message, pairingActionTitle: pairingActionTitle)
+        return errorCell(message: failure.message)
       }
       return sessionCell(for: loaded.sessions[indexPath.row])
 
@@ -182,12 +162,12 @@ extension SessionsViewController: UITableViewDataSource {
     return cell
   }
 
-  private func errorCell(message: String, pairingActionTitle: String) -> UITableViewCell {
+  private func errorCell(message: String) -> UITableViewCell {
     var content = UIListContentConfiguration.subtitleCell()
     content.image = UIImage(systemName: "exclamationmark.triangle")
     content.imageProperties.tintColor = .systemOrange
     content.text = "Couldn’t load sessions"
-    content.secondaryText = "\(message)\nTap to retry, or use \(pairingActionTitle) to pair again."
+    content.secondaryText = "\(message)\nTap to retry."
     content.secondaryTextProperties.numberOfLines = 0
 
     let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
@@ -262,7 +242,7 @@ extension SessionsViewController: UITableViewDelegate {
 
   func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
     if case .failed = store.list {
-      return "If this keeps failing, re-pair from the desktop Mobile Companion settings."
+      return "If this keeps failing, log out and connect again from the desktop Mobile Companion settings."
     }
     if case .refreshFailed = store.list {
       return "Refresh failed. Pull to retry."
@@ -272,11 +252,11 @@ extension SessionsViewController: UITableViewDelegate {
 
   func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
     guard case .failed = store.list else { return nil }
-    let repair = UIContextualAction(style: .destructive, title: "Re-pair") { [weak self] _, _, completion in
-      self?.store.send(.repairButtonTapped)
+    let refresh = UIContextualAction(style: .normal, title: "Retry") { [weak self] _, _, completion in
+      self?.store.send(.refreshButtonTapped)
       completion(true)
     }
-    return UISwipeActionsConfiguration(actions: [repair])
+    return UISwipeActionsConfiguration(actions: [refresh])
   }
 }
 

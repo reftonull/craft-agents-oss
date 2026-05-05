@@ -14,8 +14,8 @@ struct SessionsFeatureTests {
     try await withMainSerialExecutor {
       let older = RemoteSession(id: "older", lastMessageAt: 1, name: "Older")
       let newer = RemoteSession(id: "newer", lastMessageAt: 2, name: "Newer")
-      let pairing = try Pairing(token: "token", url: #require(URL(string: "ws://desktop.local:9100")), workspaceID: "workspace-1")
-      let store = await TestStoreActor(initialState: SessionsFeature.State(pairing: pairing)) {
+      let workspace = try testWorkspace()
+      let store = await TestStoreActor(initialState: SessionsFeature.State(workspace: workspace)) {
         SessionsFeature()
           .dependency(\.rpcClient, .mock(sessions: [older, newer]))
       }
@@ -34,9 +34,9 @@ struct SessionsFeatureTests {
     try await withMainSerialExecutor {
       let old = RemoteSession(id: "old", lastMessageAt: 1, name: "Old")
       let new = RemoteSession(id: "new", lastMessageAt: 2, name: "New")
-      let pairing = try Pairing(token: "token", url: #require(URL(string: "ws://desktop.local:9100")), workspaceID: "workspace-1")
+      let workspace = try testWorkspace()
       let loaded = SessionsFeature.Loaded(sessions: [old])
-      let store = await TestStoreActor(initialState: SessionsFeature.State(list: .loaded(loaded), pairing: pairing)) {
+      let store = await TestStoreActor(initialState: SessionsFeature.State(list: .loaded(loaded), workspace: workspace)) {
         SessionsFeature()
           .dependency(\.rpcClient, .mock(sessions: [new]))
       }
@@ -54,9 +54,9 @@ struct SessionsFeatureTests {
   func `refresh error retains previous sessions`() async throws {
     try await withMainSerialExecutor {
       let old = RemoteSession(id: "old", lastMessageAt: 1, name: "Old")
-      let pairing = try Pairing(token: "token", url: #require(URL(string: "ws://desktop.local:9100")), workspaceID: "workspace-1")
+      let workspace = try testWorkspace()
       let loaded = SessionsFeature.Loaded(sessions: [old])
-      let store = await TestStoreActor(initialState: SessionsFeature.State(list: .loaded(loaded), pairing: pairing)) {
+      let store = await TestStoreActor(initialState: SessionsFeature.State(list: .loaded(loaded), workspace: workspace)) {
         SessionsFeature()
           .dependency(\.rpcClient, .mock(error: RPCClientError.disconnected))
       }
@@ -77,12 +77,8 @@ struct SessionsFeatureTests {
 /// Keeping it as XCTest preserves coverage while avoiding noisy, misleading summaries.
 final class SessionsFeatureXCTests: XCTestCase {
   func testUnavailableServerPresentsFailedSessionsScreen() async throws {
-    let pairing = try Pairing(
-      token: "token",
-      url: XCTUnwrap(URL(string: "ws://desktop.local:9100")),
-      workspaceID: "workspace-1"
-    )
-    let store = await StoreActor(initialState: SessionsFeature.State(list: .loading, pairing: pairing)) {
+    let workspace = try testWorkspace()
+    let store = await StoreActor(initialState: SessionsFeature.State(list: .loading, workspace: workspace)) {
       SessionsFeature()
     }
 
@@ -96,6 +92,9 @@ final class SessionsFeatureXCTests: XCTestCase {
 private extension RPCClient {
   static func mock(sessions: [RemoteSession]) -> RPCClient {
     RPCClient { request in
+      #expect(request.url.absoluteString == "ws://desktop.local:9100")
+      #expect(request.token == "secret-token")
+      #expect(request.workspaceID == "workspace-1")
       await Task.yield()
       return MockRPCConnection(request: request, result: .success(sessions))
     }

@@ -2,23 +2,28 @@
 import ComposableArchitecture2
 import ConnectionFeature
 import Database
+import DependenciesTestSupport
 import Foundation
 import Observation
 import Sharing
 import Testing
 
-@Suite("AppFeature observation")
+@Suite(
+  "AppFeature observation",
+  .dependencies {
+    $0.defaultAppStorage = .inMemory
+    try $0.bootstrapDatabase()
+  }
+)
 struct AppObservationTests {
   @MainActor
   @Test
-  func `route observation invalidates when switching from onboarding to main`() async throws {
-    let pairing = try Pairing(
-      token: "secret-token",
-      url: #require(URL(string: "ws://desktop.local:9100")),
-      workspaceID: "workspace-1"
+  func `route observation invalidates when connection updates selected workspace`() async throws {
+    let workspace = try testWorkspace(
+      id: "00000000-0000-0000-0000-000000000201"
     )
-    @Shared(value: nil) var persistedPairing: Pairing?
-    let store = Store(initialState: AppFeature.State(pairing: $persistedPairing)) {
+    @Shared(value: nil) var selectedWorkspaceID: Workspace.ID?
+    let store = Store(initialState: AppFeature.State(selectedWorkspaceID: $selectedWorkspaceID)) {
       AppFeature()
     }
     let recorder = ObservationRecorder()
@@ -32,7 +37,7 @@ struct AppObservationTests {
       }
     }
 
-    await store.send(.route(.onboarding(.delegate(.pairingCompleted(pairing)))))?.value
+    await store.send(.route(.onboarding(.connectionResponse(.success(workspace)))))?.value
     await Task.yield()
 
     #expect(recorder.invalidationCount == 1)

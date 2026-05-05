@@ -18,6 +18,7 @@ let package = Package(
     .package(url: "https://github.com/pointfreeco/sqlite-data", from: "1.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-concurrency-extras", from: "1.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.0"),
+    .package(url: "https://github.com/pointfreeco/swift-navigation", from: "2.8.0"),
     .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.3.0"),
   ],
   targets: [
@@ -29,6 +30,8 @@ let package = Package(
         "RPCClient",
         .product(name: "ComposableArchitecture2", package: "TCA26"),
         .product(name: "Sharing", package: "swift-sharing"),
+        .product(name: "SQLiteData", package: "sqlite-data"),
+        .product(name: "UIKitNavigation", package: "swift-navigation"),
       ]
     ),
     .testTarget(
@@ -40,6 +43,7 @@ let package = Package(
         "RPCClient",
         .product(name: "ComposableArchitecture2", package: "TCA26"),
         .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
+        .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
         .product(name: "Sharing", package: "swift-sharing"),
       ]
     ),
@@ -49,6 +53,7 @@ let package = Package(
         "Database",
         "RPCClient",
         .product(name: "ComposableArchitecture2", package: "TCA26"),
+        .product(name: "SQLiteData", package: "sqlite-data"),
       ]
     ),
     .testTarget(

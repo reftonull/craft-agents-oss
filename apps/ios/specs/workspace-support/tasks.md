@@ -95,17 +95,17 @@ description: "Task list for Workspace Support implementation"
 
 ### Tests for User Story 1
 
-- [ ] T036 [P] [US1] Add failing app route test for no saved workspaces showing onboarding in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AppFeatureTests/AppFeatureTests.swift`
-- [ ] T037 [P] [US1] Add failing app route test for connection completion saving a workspace and selecting it in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AppFeatureTests/AppFeatureTests.swift`
-- [ ] T038 [P] [US1] Add failing connection test for invalid connection preserving setup and recoverable error state in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/ConnectionFeatureTests/ConnectionFeatureTests.swift`
+- [X] T036 [P] [US1] Add failing app route test for no saved workspaces showing onboarding in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AppFeatureTests/AppFeatureTests.swift`
+- [X] T037 [P] [US1] Add failing app route test for connection completion saving a workspace and selecting it in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AppFeatureTests/AppFeatureTests.swift`
+- [X] T038 [P] [US1] Add failing connection test for invalid connection preserving setup and recoverable error state in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/ConnectionFeatureTests/ConnectionFeatureTests.swift`
 
 ### Implementation for User Story 1
 
-- [ ] T039 [US1] Replace single optional `Pairing` launch decision with saved-workspace lookup in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppFeature.swift`
-- [ ] T040 [US1] Convert successful first setup into a saved `Workspace` plus selected workspace preference update in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppFeature.swift`
-- [ ] T041 [US1] Preserve root connection setup as non-dismissible onboarding when no saved workspaces exist in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppViewController.swift`
-- [ ] T042 [US1] Ensure `ConnectionFeature` exposes enough remote workspace display data to save a recognizable workspace in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ConnectionFeature/ConnectionFeature.swift`
-- [ ] T043 [US1] Update first-setup copy and failure display if needed in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ConnectionFeature/ConnectionViewController.swift`
+- [X] T039 [US1] Replace single optional `Pairing` launch decision with saved-workspace lookup in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppFeature.swift`
+- [X] T040 [US1] Convert successful first setup into a saved `Workspace` plus selected workspace preference update in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppFeature.swift`
+- [X] T041 [US1] Preserve root connection setup as non-dismissible onboarding when no saved workspaces exist in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppViewController.swift`
+- [X] T042 [US1] Ensure `ConnectionFeature` exposes enough remote workspace display data to save a recognizable workspace in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ConnectionFeature/ConnectionFeature.swift`
+- [X] T043 [US1] Update first-setup copy and failure display if needed in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ConnectionFeature/ConnectionViewController.swift`
 
 **Checkpoint**: User Story 1 is fully functional and testable independently as the first-launch MVP.
 
@@ -119,17 +119,19 @@ description: "Task list for Workspace Support implementation"
 
 ### Tests for User Story 2
 
-- [ ] T044 [P] [US2] Add failing test for valid selected workspace launching main route in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AppFeatureTests/AppFeatureTests.swift`
+- [X] T044 [P] [US2] Add failing test for valid selected workspace launching main route in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AppFeatureTests/AppFeatureTests.swift`
 - [ ] T045 [P] [US2] Add failing test for stale selected workspace falling back to a saved workspace in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AppFeatureTests/AppFeatureTests.swift`
-- [ ] T046 [P] [US2] Add failing test for `SessionsFeature` loading sessions from the current workspace record in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AppFeatureTests/SessionsFeatureTests.swift`
+- [X] T046 [P] [US2] Add failing test for `SessionsFeature` loading sessions from the current workspace record in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AppFeatureTests/SessionsFeatureTests.swift`
 
 ### Implementation for User Story 2
 
-- [ ] T047 [US2] Add explicit current workspace state to main app routing in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppFeature.swift`
-- [ ] T048 [US2] Pass the resolved current workspace into `TabFeature.State` instead of proof-of-concept `Pairing` in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/TabFeature.swift`
-- [ ] T049 [US2] Pass the resolved current workspace into `SessionsFeature.State` in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/SessionsFeature.swift`
-- [ ] T050 [US2] Update session-loading connection request to use current workspace record fields in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/SessionsFeature.swift`
-- [ ] T051 [US2] Update Sessions status text to show the workspace display name or recognizable identity in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/SessionsViewController.swift`
+- [X] T047 [US2] Add explicit current workspace state to main app routing in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppFeature.swift`
+- [X] T048 [US2] Pass the resolved current workspace into `TabFeature.State` instead of proof-of-concept `Pairing` in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/TabFeature.swift`
+- [X] T049 [US2] Pass the resolved current workspace into `SessionsFeature.State` in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/SessionsFeature.swift`
+- [X] T050 [US2] Update session-loading connection request to use current workspace record fields in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/SessionsFeature.swift`
+- [X] T051 [US2] Update Sessions status text to show the workspace display name or recognizable identity in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/SessionsViewController.swift`
+- [X] T074 [US2] Remove proof-of-concept Logout/Re-pair navigation item from `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/SessionsViewController.swift`
+- [X] T075 [US2] Remove obsolete repair delegate plumbing from `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/SessionsFeature.swift`
 
 **Checkpoint**: User Stories 1 and 2 support first launch and return launch without repeating setup.
 
@@ -197,11 +199,9 @@ description: "Task list for Workspace Support implementation"
 
 ### Implementation for User Story 5
 
-- [ ] T071 [US5] Add Logout Current Workspace action to the switcher UI in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/TabViewController.swift`
-- [ ] T072 [US5] Implement current workspace deletion and fallback selection in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/TabFeature.swift`
-- [ ] T073 [US5] Delegate final-workspace logout from main route back to setup in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppFeature.swift`
-- [ ] T074 [US5] Remove proof-of-concept Logout/Re-pair navigation item from `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/SessionsViewController.swift`
-- [ ] T075 [US5] Remove obsolete repair delegate plumbing from `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/SessionsFeature.swift`
+- [ ] T071 [US5] Add Logout Current Workspace action to the workspace switcher UI in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/TabViewController.swift`
+- [ ] T072 [US5] Implement current workspace deletion and fallback selection from the switcher in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/TabFeature.swift`
+- [ ] T073 [US5] Ensure final-workspace logout returns to setup through shared workspace selection and fetched workspace records in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppFeature.swift`
 
 **Checkpoint**: Current-workspace logout works for both single-workspace and multi-workspace cases.
 

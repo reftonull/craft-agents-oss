@@ -5,22 +5,33 @@ import Foundation
 @Feature
 struct TabFeature {
   struct State {
-    var pairing: Pairing
     var sessions: SessionsFeature.State
+    var workspace: Workspace
 
-    init(pairing: Pairing) {
-      self.pairing = pairing
-      sessions = SessionsFeature.State(pairing: pairing)
+    init(workspace: Workspace) {
+      self.workspace = workspace
+      sessions = SessionsFeature.State(workspace: workspace)
     }
   }
 
   enum Action {
+    case logoutButtonTapped
     case sessions(SessionsFeature.Action)
   }
 
   var body: some Feature {
     Scope(state: \.sessions, action: \.sessions) {
       SessionsFeature()
+    }
+
+    Update { _, action in
+      switch action {
+      case .logoutButtonTapped:
+        break
+
+      case .sessions:
+        break
+      }
     }
   }
 }
