@@ -10,7 +10,7 @@ This repository currently tracks **Craft Agents OSS** while evolving it in a sli
 The main work in this fork is a native Apple companion app called **Agents Mobile**:
 
 - a **UIKit** app for iPhone, iPad, and **Mac Catalyst**
-- built with **Tuist**, **FlowDeck**, and **TCA 2** (`ComposableArchitecture2`)
+- built with a checked-in **Xcode project**, a local **Swift package**, **FlowDeck**, and **TCA 2** (`ComposableArchitecture2`)
 - connected to the existing **Craft Agents desktop app's embedded server**
 - focused on letting you pair with a desktop app and continue that work from Apple devices
 

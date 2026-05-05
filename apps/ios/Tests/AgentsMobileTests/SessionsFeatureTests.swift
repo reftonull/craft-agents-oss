@@ -1,4 +1,4 @@
-@testable import AgentsMobile
+@testable import AgentsMobileCore
 import ComposableArchitecture2
 import ConcurrencyExtras
 import Foundation
@@ -71,8 +71,8 @@ struct SessionsFeatureTests {
 
 /// This one reducer-only assertion intentionally uses XCTest instead of Swift Testing.
 /// FlowDeck currently mis-parses this particular Swift Testing/TCA test shape as two
-/// ghost child failures, even though `tuist test` and Xcode report it passing. Keeping
-/// it as XCTest preserves coverage while avoiding noisy, misleading FlowDeck summaries.
+/// ghost child failures, even though the underlying XCTest runner reports it passing.
+/// Keeping it as XCTest preserves coverage while avoiding noisy, misleading summaries.
 final class SessionsFeatureXCTests: XCTestCase {
   func testUnavailableServerPresentsFailedSessionsScreen() async throws {
     let pairing = try Pairing(

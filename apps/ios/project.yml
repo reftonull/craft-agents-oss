@@ -1,0 +1,71 @@
+name: AgentsMobile
+options:
+  createIntermediateGroups: true
+  defaultConfig: Debug
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "26.0"
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+packages:
+  AgentsMobilePackage:
+    path: .
+targets:
+  AgentsMobileApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: App
+    dependencies:
+      - package: AgentsMobilePackage
+        product: AgentsMobileCore
+    info:
+      path: Derived/InfoPlists/AgentsMobile-Info.plist
+      properties:
+        CFBundleDisplayName: Agents Mobile
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        NSLocalNetworkUsageDescription: Agents Mobile connects to the Craft Agents desktop app on your local network.
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    settings:
+      base:
+        PRODUCT_NAME: AgentsMobile
+        PRODUCT_BUNDLE_IDENTIFIER: do.craft.agents.mobile
+        TARGETED_DEVICE_FAMILY: "1,2,6"
+        SUPPORTS_MACCATALYST: YES
+        SDKROOT: iphoneos
+  AgentsMobileTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: Tests/AgentsMobileTests
+    dependencies:
+      - package: AgentsMobilePackage
+        product: AgentsMobileCore
+    info:
+      path: Derived/InfoPlists/AgentsMobileTests-Info.plist
+      properties: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: do.craft.agents.mobile.tests
+        TARGETED_DEVICE_FAMILY: "1,2,6"
+        SUPPORTS_MACCATALYST: YES
+        SDKROOT: iphoneos
+schemes:
+  AgentsMobile:
+    build:
+      targets:
+        AgentsMobileApp: all
+    test:
+      gatherCoverageData: false
+      targets:
+        - name: AgentsMobileTests

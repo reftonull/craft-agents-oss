@@ -1,4 +1,4 @@
-@testable import AgentsMobile
+@testable import AgentsMobileCore
 import Foundation
 import Testing
 

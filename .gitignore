@@ -39,21 +39,25 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # IntelliJ based IDEs
 .idea
 
-# Xcode / Tuist generated files
+# Xcode generated files
 *.xcodeproj
+!apps/ios/AgentsMobile.xcodeproj/
+!apps/ios/AgentsMobile.xcodeproj/**
 *.xcworkspace
+!apps/ios/AgentsMobile.xcodeproj/project.xcworkspace/
+!apps/ios/AgentsMobile.xcodeproj/project.xcworkspace/**
+*.xcuserdata/
+apps/ios/AgentsMobile.xcodeproj/xcuserdata/
 DerivedData/
 apps/ios/Derived/
 *.xcresult
 *.profraw
 
-# Tuist caches / generated dependency artifacts
+# Legacy Tuist caches / generated dependency artifacts
 .tuist-cache/
 .tuist-legacy-cache/
 apps/ios/.tuist-bin/
-apps/ios/Tuist/.build/
-apps/ios/Tuist/Dependencies/
-apps/ios/Tuist/Package.resolved
+apps/ios/Tuist/
 
 # Python bytecode
 __pycache__/

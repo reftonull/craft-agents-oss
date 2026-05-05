@@ -1,4 +1,4 @@
-@testable import AgentsMobile
+@testable import AgentsMobileCore
 import ComposableArchitecture2
 import Foundation
 import Sharing

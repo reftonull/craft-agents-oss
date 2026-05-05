@@ -21,7 +21,7 @@ Today the app includes:
 
 - a native **UIKit** app lifecycle (`AppDelegate`, `SceneDelegate`, `UIWindow`)
 - **TCA 2** features and routing using `ComposableArchitecture2`
-- **Tuist** project generation and **FlowDeck** build/test workflows
+- a checked-in **Xcode project**, local **Swift package**, and **FlowDeck** build/test workflows
 - **Mac Catalyst** support alongside iPhone/iPad
 - persisted pairing using Point-Free `@Shared`
 - a manual pairing flow using server URL, token, and optional workspace ID
@@ -76,7 +76,7 @@ The app currently follows this shape:
 ## Development requirements
 
 - Xcode / Swift toolchain compatible with Swift tools `6.3`
-- Tuist
+- XcodeGen (`brew install xcodegen`) when regenerating `AgentsMobile.xcodeproj` from `project.yml`
 - FlowDeck
 - SwiftFormat (`brew install swiftformat`)
 - SSH access to `git@github.com:pointfreeco/TCA26.git`
@@ -88,11 +88,16 @@ The project currently targets:
 
 ## Setup
 
-From `apps/ios`:
+From `apps/ios`, resolve Swift packages through Xcode/FlowDeck by building once:
 
 ```bash
-tuist install
-tuist generate
+flowdeck build
+```
+
+If you change `project.yml`, regenerate the checked-in project with:
+
+```bash
+xcodegen generate
 ```
 
 ## Common commands
@@ -100,7 +105,6 @@ tuist generate
 From `apps/ios`:
 
 ```bash
-tuist generate
 flowdeck build
 flowdeck test
 swiftformat .
