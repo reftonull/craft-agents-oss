@@ -1,6 +1,6 @@
 import Foundation
 
-struct RPCClientConfiguration: Equatable, Sendable {
+struct RPCClientConfiguration: Equatable {
   var connectTimeout: Duration
   var requestTimeout: Duration
 
@@ -13,7 +13,7 @@ struct RPCClientConfiguration: Equatable, Sendable {
   }
 }
 
-struct RPCConnectionInfo: Equatable, Sendable {
+struct RPCConnectionInfo: Equatable {
   var clientID: String
   var protocolVersion: String?
   var registeredChannels: Set<String>
@@ -22,7 +22,7 @@ struct RPCConnectionInfo: Equatable, Sendable {
   var stale: Bool
 }
 
-struct RPCConnectionRequest: Equatable, Sendable {
+struct RPCConnectionRequest: Equatable {
   var clientCapabilities: [String]
   var token: String
   var url: URL
@@ -41,11 +41,11 @@ struct RPCConnectionRequest: Equatable, Sendable {
   }
 }
 
-struct RPCDisconnectInfo: Equatable, Sendable {
+struct RPCDisconnectInfo: Equatable {
   var reason: String?
 }
 
-enum RPCConnectionEvent: Equatable, Sendable {
+enum RPCConnectionEvent: Equatable {
   case connecting
   case connected(RPCConnectionInfo)
   case disconnected(RPCDisconnectInfo)
@@ -53,7 +53,7 @@ enum RPCConnectionEvent: Equatable, Sendable {
   case handshaking
 }
 
-enum RPCClientError: Error, Equatable, Sendable {
+enum RPCClientError: Error, Equatable {
   case channelUnavailable(String)
   case disconnected
   case connectTimedOut
@@ -65,3 +65,10 @@ enum RPCClientError: Error, Equatable, Sendable {
   case serverError(RPCWireError)
   case unimplemented
 }
+
+extension RPCClientConfiguration: Sendable {}
+extension RPCConnectionInfo: Sendable {}
+extension RPCConnectionRequest: Sendable {}
+extension RPCDisconnectInfo: Sendable {}
+extension RPCConnectionEvent: Sendable {}
+extension RPCClientError: Sendable {}

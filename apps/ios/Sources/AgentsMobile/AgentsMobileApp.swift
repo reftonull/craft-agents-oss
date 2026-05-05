@@ -24,12 +24,12 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   ) {
     guard let windowScene = scene as? UIWindowScene else { return }
 
-    let store = Store(initialState: ConnectionFeature.State()) {
-      ConnectionFeature()
+    let store = Store(initialState: AppFeature.State()) {
+      AppFeature()
     }
 
     let window = UIWindow(windowScene: windowScene)
-    window.rootViewController = UINavigationController(rootViewController: ConnectionViewController(store: store))
+    window.rootViewController = AppViewController(store: store)
     self.window = window
     window.makeKeyAndVisible()
   }

@@ -4,8 +4,8 @@ import Testing
 
 @Suite("RPC protocol")
 struct RPCProtocolTests {
-  @Test("encodes handshake envelope expected by the desktop server")
-  func encodesHandshakeEnvelope() throws {
+  @Test
+  func `encodes handshake envelope expected by the desktop server`() throws {
     let envelope = RPCEnvelope(
       id: "handshake-id",
       type: .handshake,
@@ -22,8 +22,8 @@ struct RPCProtocolTests {
     """)
   }
 
-  @Test("decodes handshake acknowledgement")
-  func decodesHandshakeAcknowledgement() throws {
+  @Test
+  func `decodes handshake acknowledgement`() throws {
     let envelope = try RPCEnvelope.decode("""
     {
       "id": "handshake-id",

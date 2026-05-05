@@ -5,10 +5,10 @@ import Testing
 
 @Suite("LiveRPCClient")
 struct LiveRPCClientTests {
-  @Test("connect sends handshake and publishes connected event")
-  func connectSendsHandshakeAndPublishesConnectedEvent() async throws {
+  @Test
+  func `connect sends handshake and publishes connected event`() async throws {
     let socket = TestRPCWebSocket()
-    let client = makeClient(webSocketFactory: .test(socket))
+    let client = makeClient(webSocketFactory: .mock(socket))
 
     let connectionTask = Task {
       try await client.connect(
@@ -56,8 +56,8 @@ struct LiveRPCClientTests {
     await connection.close()
   }
 
-  @Test("invoke sends request and decodes response")
-  func invokeSendsRequestAndDecodesResponse() async throws {
+  @Test
+  func `invoke sends request and decodes response`() async throws {
     struct Workspace: Decodable, Equatable {
       var id: String
       var name: String
@@ -65,7 +65,7 @@ struct LiveRPCClientTests {
     }
 
     let socket = TestRPCWebSocket()
-    let client = makeClient(webSocketFactory: .test(socket))
+    let client = makeClient(webSocketFactory: .mock(socket))
 
     let connection = try await connect(
       client,
@@ -107,10 +107,10 @@ struct LiveRPCClientTests {
     await connection.close()
   }
 
-  @Test("rejects unavailable channels advertised by the server")
-  func rejectsUnavailableChannels() async throws {
+  @Test
+  func `rejects unavailable channels advertised by the server`() async throws {
     let socket = TestRPCWebSocket()
-    let client = makeClient(webSocketFactory: .test(socket))
+    let client = makeClient(webSocketFactory: .mock(socket))
 
     let connection = try await connect(
       client,
@@ -125,10 +125,10 @@ struct LiveRPCClientTests {
     await connection.close()
   }
 
-  @Test("propagates response errors")
-  func propagatesResponseErrors() async throws {
+  @Test
+  func `propagates response errors`() async throws {
     let socket = TestRPCWebSocket()
-    let client = makeClient(webSocketFactory: .test(socket))
+    let client = makeClient(webSocketFactory: .mock(socket))
 
     let connection = try await connect(
       client,
@@ -155,13 +155,13 @@ struct LiveRPCClientTests {
     await connection.close()
   }
 
-  @Test("times out requests that never receive a response")
-  func timesOutRequestsThatNeverReceiveAResponse() async throws {
+  @Test
+  func `times out requests that never receive a response`() async throws {
     let socket = TestRPCWebSocket()
     let clock = TestClock()
     let client = makeClient(
       configuration: RPCClientConfiguration(requestTimeout: .seconds(1)),
-      webSocketFactory: .test(socket),
+      webSocketFactory: .mock(socket),
       clock: clock
     )
 
@@ -183,10 +183,10 @@ struct LiveRPCClientTests {
     await connection.close()
   }
 
-  @Test("closing connection fails pending requests")
-  func closingConnectionFailsPendingRequests() async throws {
+  @Test
+  func `closing connection fails pending requests`() async throws {
     let socket = TestRPCWebSocket()
-    let client = makeClient(webSocketFactory: .test(socket))
+    let client = makeClient(webSocketFactory: .mock(socket))
 
     let connection = try await connect(
       client,
@@ -204,13 +204,13 @@ struct LiveRPCClientTests {
     }
   }
 
-  @Test("fails connection when handshake acknowledgement never arrives")
-  func failsConnectionWhenHandshakeAcknowledgementNeverArrives() async throws {
+  @Test
+  func `fails connection when handshake acknowledgement never arrives`() async throws {
     let socket = TestRPCWebSocket()
     let clock = TestClock()
     let client = makeClient(
       configuration: RPCClientConfiguration(connectTimeout: .seconds(1)),
-      webSocketFactory: .test(socket),
+      webSocketFactory: .mock(socket),
       clock: clock
     )
 
@@ -231,10 +231,10 @@ struct LiveRPCClientTests {
     }
   }
 
-  @Test("acknowledges the latest event sequence")
-  func acknowledgesLatestEventSequence() async throws {
+  @Test
+  func `acknowledges the latest event sequence`() async throws {
     let socket = TestRPCWebSocket()
-    let client = makeClient(webSocketFactory: .test(socket))
+    let client = makeClient(webSocketFactory: .mock(socket))
 
     let connection = try await connect(
       client,
@@ -266,10 +266,10 @@ struct LiveRPCClientTests {
     await connection.close()
   }
 
-  @Test("publishes server push events")
-  func publishesServerPushEvents() async throws {
+  @Test
+  func `publishes server push events`() async throws {
     let socket = TestRPCWebSocket()
-    let client = makeClient(webSocketFactory: .test(socket))
+    let client = makeClient(webSocketFactory: .mock(socket))
 
     let connection = try await connect(
       client,
@@ -299,11 +299,11 @@ struct LiveRPCClientTests {
     await connection.close()
   }
 
-  @Test("server connection closing late does not affect workspace connection")
-  func serverConnectionClosingLateDoesNotAffectWorkspaceConnection() async throws {
+  @Test
+  func `server connection closing late does not affect workspace connection`() async throws {
     let serverSocket = TestRPCWebSocket()
     let workspaceSocket = TestRPCWebSocket()
-    let client = makeClient(webSocketFactory: .test([serverSocket, workspaceSocket]))
+    let client = makeClient(webSocketFactory: .mock([serverSocket, workspaceSocket]))
 
     let serverConnection = try await connect(
       client,

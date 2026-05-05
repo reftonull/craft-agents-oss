@@ -1,5 +1,5 @@
 # SwiftFormat configuration for Agents Mobile
---minversion 0.56.4
+--minversion 0.61.1
 --swiftversion 6.0
 
 # Avoid formatting generated / dependency artifacts

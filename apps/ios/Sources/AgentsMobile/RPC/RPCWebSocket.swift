@@ -7,7 +7,7 @@ protocol RPCWebSocket: Sendable {
   func send(_ string: String) async throws
 }
 
-struct RPCWebSocketFactory: Sendable {
+struct RPCWebSocketFactory {
   var makeWebSocket: @Sendable (URL) -> any RPCWebSocket
 
   func makeWebSocket(for url: URL) -> any RPCWebSocket {
@@ -58,3 +58,5 @@ private final class URLSessionRPCWebSocket: RPCWebSocket, @unchecked Sendable {
     try await task.send(.string(string))
   }
 }
+
+extension RPCWebSocketFactory: Sendable {}

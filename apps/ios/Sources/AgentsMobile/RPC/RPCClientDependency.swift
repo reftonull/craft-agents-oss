@@ -1,7 +1,7 @@
 import ComposableArchitecture2
 import Foundation
 
-struct RPCClient: Sendable {
+struct RPCClient {
   var connect: @Sendable (RPCConnectionRequest) async throws -> any RPCConnection
 }
 
@@ -26,3 +26,5 @@ extension DependencyValues {
     set { self[RPCClient.self] = newValue }
   }
 }
+
+extension RPCClient: Sendable {}

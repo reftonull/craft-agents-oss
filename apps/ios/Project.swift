@@ -9,7 +9,7 @@ let project = Project(
   settings: .settings(
     base: [
       "SWIFT_VERSION": "6.0",
-      "IPHONEOS_DEPLOYMENT_TARGET": "17.0",
+      "IPHONEOS_DEPLOYMENT_TARGET": "26.0",
       "ENABLE_USER_SCRIPT_SANDBOXING": "YES",
     ]
   ),
@@ -19,7 +19,7 @@ let project = Project(
       destinations: [.iPhone, .iPad, .macCatalyst],
       product: .app,
       bundleId: "do.craft.agents.mobile",
-      deploymentTargets: .iOS("17.0"),
+      deploymentTargets: .iOS("26.0"),
       infoPlist: .extendingDefault(with: [
         "CFBundleDisplayName": "Agents Mobile",
         "NSAppTransportSecurity": [
@@ -40,6 +40,7 @@ let project = Project(
       sources: ["Sources/AgentsMobile/**"],
       dependencies: [
         .external(name: "ComposableArchitecture2"),
+        .external(name: "Sharing"),
       ]
     ),
     .target(
@@ -47,7 +48,7 @@ let project = Project(
       destinations: [.iPhone, .iPad, .macCatalyst],
       product: .unitTests,
       bundleId: "do.craft.agents.mobile.tests",
-      deploymentTargets: .iOS("17.0"),
+      deploymentTargets: .iOS("26.0"),
       infoPlist: .default,
       sources: ["Tests/AgentsMobileTests/**"],
       dependencies: [

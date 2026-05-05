@@ -13,7 +13,7 @@ enum RPCProtocol {
   static let version = "1.0"
 }
 
-enum RPCMessageType: String, Codable, Equatable, Sendable {
+enum RPCMessageType: String, Codable, Equatable {
   case error
   case event
   case handshake
@@ -23,13 +23,13 @@ enum RPCMessageType: String, Codable, Equatable, Sendable {
   case sequenceAck = "sequence_ack"
 }
 
-struct RPCWireError: Codable, Equatable, Error, Sendable {
+struct RPCWireError: Codable, Equatable, Error {
   var code: String
   var data: JSONValue?
   var message: String
 }
 
-struct RPCEnvelope: Codable, Equatable, Sendable {
+struct RPCEnvelope: Codable, Equatable {
   var args: [JSONValue]?
   var channel: String?
   var clientCapabilities: [String]?
@@ -109,3 +109,7 @@ extension RPCEnvelope {
     return string
   }
 }
+
+extension RPCMessageType: Sendable {}
+extension RPCWireError: Sendable {}
+extension RPCEnvelope: Sendable {}

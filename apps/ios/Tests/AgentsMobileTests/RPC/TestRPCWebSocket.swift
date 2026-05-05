@@ -77,11 +77,11 @@ actor TestRPCWebSocket: RPCWebSocket {
 }
 
 extension RPCWebSocketFactory {
-  static func test(_ socket: TestRPCWebSocket) -> RPCWebSocketFactory {
+  static func mock(_ socket: TestRPCWebSocket) -> RPCWebSocketFactory {
     RPCWebSocketFactory { _ in socket }
   }
 
-  static func test(_ sockets: [TestRPCWebSocket]) -> RPCWebSocketFactory {
+  static func mock(_ sockets: [TestRPCWebSocket]) -> RPCWebSocketFactory {
     let sockets = SocketQueue(sockets)
     return RPCWebSocketFactory { _ in sockets.next() }
   }

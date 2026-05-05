@@ -6,14 +6,11 @@ final class ConnectionViewController: UIViewController {
   private let store: StoreOf<ConnectionFeature>
 
   private let statusLabel = UILabel()
-  private let summariesLabel = UILabel()
+  private let detailLabel = UILabel()
   private let urlField = UITextField()
   private let tokenField = UITextField()
   private let workspaceField = UITextField()
   private let connectButton = UIButton(type: .system)
-  private let disconnectButton = UIButton(type: .system)
-  private let clearLogButton = UIButton(type: .system)
-  private let eventTextView = UITextView()
 
   init(store: StoreOf<ConnectionFeature>) {
     self.store = store
@@ -40,10 +37,10 @@ final class ConnectionViewController: UIViewController {
     statusLabel.adjustsFontForContentSizeCategory = true
     statusLabel.numberOfLines = 0
 
-    summariesLabel.font = .preferredFont(forTextStyle: .footnote)
-    summariesLabel.adjustsFontForContentSizeCategory = true
-    summariesLabel.textColor = .secondaryLabel
-    summariesLabel.numberOfLines = 0
+    detailLabel.font = .preferredFont(forTextStyle: .footnote)
+    detailLabel.adjustsFontForContentSizeCategory = true
+    detailLabel.textColor = .secondaryLabel
+    detailLabel.numberOfLines = 0
 
     configureTextField(urlField, placeholder: "ws://192.168.1.10:9100")
     urlField.keyboardType = .URL
@@ -53,7 +50,7 @@ final class ConnectionViewController: UIViewController {
 
     configureTextField(tokenField, placeholder: "Mobile companion token")
     tokenField.isSecureTextEntry = true
-    tokenField.textContentType = .password
+    tokenField.textContentType = .oneTimeCode
     tokenField.autocapitalizationType = .none
     tokenField.addTarget(self, action: #selector(tokenFieldChanged), for: .editingChanged)
 
@@ -65,39 +62,19 @@ final class ConnectionViewController: UIViewController {
     connectButton.titleLabel?.font = .preferredFont(forTextStyle: .headline)
     connectButton.addTarget(self, action: #selector(connectButtonTapped), for: .touchUpInside)
 
-    disconnectButton.setTitle("Disconnect", for: .normal)
-    disconnectButton.addTarget(self, action: #selector(disconnectButtonTapped), for: .touchUpInside)
-
-    clearLogButton.setTitle("Clear Log", for: .normal)
-    clearLogButton.addTarget(self, action: #selector(clearLogButtonTapped), for: .touchUpInside)
-
-    eventTextView.isEditable = false
-    eventTextView.alwaysBounceVertical = true
-    eventTextView.backgroundColor = .secondarySystemBackground
-    eventTextView.layer.cornerRadius = 12
-    eventTextView.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
-    eventTextView.textContainerInset = UIEdgeInsets(top: 12, left: 10, bottom: 12, right: 10)
-
-    let buttonStack = UIStackView(arrangedSubviews: [connectButton, disconnectButton, clearLogButton])
-    buttonStack.axis = .horizontal
-    buttonStack.alignment = .center
-    buttonStack.distribution = .fillEqually
-    buttonStack.spacing = 12
-
     let formStack = UIStackView(arrangedSubviews: [
       labeled("Server URL", urlField),
       labeled("Token", tokenField),
       labeled("Workspace", workspaceField),
-      buttonStack,
+      connectButton,
     ])
     formStack.axis = .vertical
     formStack.spacing = 12
 
     let stackView = UIStackView(arrangedSubviews: [
       statusLabel,
-      summariesLabel,
+      detailLabel,
       formStack,
-      eventTextView,
     ])
     stackView.axis = .vertical
     stackView.spacing = 16
@@ -109,8 +86,6 @@ final class ConnectionViewController: UIViewController {
       stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
       stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
       stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-      stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-      eventTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 220),
     ])
   }
 
@@ -146,54 +121,27 @@ final class ConnectionViewController: UIViewController {
   }
 
   private func render() {
-    statusLabel.text = store.phaseDescription
+    statusLabel.text = store.phase.title
+    detailLabel.text = store.phase.detail
+    detailLabel.textColor = if case .failed = store.phase { .systemRed } else { .secondaryLabel }
 
-    let summaries = [store.workspacesSummary, store.sessionsSummary]
-      .filter { !$0.isEmpty }
-      .joined(separator: " • ")
-    summariesLabel.text = summaries.isEmpty ? "Enter the server URL/token from desktop Settings → Mobile Companion." : summaries
-
-    if urlField.text != store.urlString, !urlField.isFirstResponder {
-      urlField.text = store.urlString
+    if urlField.text != store.form.urlString, !urlField.isFirstResponder {
+      urlField.text = store.form.urlString
     }
-    if tokenField.text != store.token, !tokenField.isFirstResponder {
-      tokenField.text = store.token
+    if tokenField.text != store.form.token, !tokenField.isFirstResponder {
+      tokenField.text = store.form.token
     }
-    if workspaceField.text != store.workspaceID, !workspaceField.isFirstResponder {
-      workspaceField.text = store.workspaceID
+    if workspaceField.text != store.form.workspaceID, !workspaceField.isFirstResponder {
+      workspaceField.text = store.form.workspaceID
     }
 
-    connectButton.isEnabled = !store.isConnecting
-    disconnectButton.isEnabled = store.isConnecting || store.isConnected
-
-    eventTextView.text = store.eventLog
-      .map { entry in
-        let prefix = switch entry.kind {
-        case .error: "❌"
-        case .event: "📨"
-        case .status: "•"
-        }
-        return "\(prefix) \(entry.message)"
-      }
-      .joined(separator: "\n")
-
-    if !eventTextView.text.isEmpty {
-      let bottom = NSRange(location: eventTextView.text.count - 1, length: 1)
-      eventTextView.scrollRangeToVisible(bottom)
-    }
-  }
-
-  @objc private func clearLogButtonTapped() {
-    store.send(.clearLogButtonTapped)
+    connectButton.isEnabled = store.canConnect
+    connectButton.setTitle(store.phase.isConnecting ? "Connecting…" : "Connect", for: .normal)
   }
 
   @objc private func connectButtonTapped() {
     view.endEditing(true)
     store.send(.connectButtonTapped)
-  }
-
-  @objc private func disconnectButtonTapped() {
-    store.send(.disconnectButtonTapped)
   }
 
   @objc private func tokenFieldChanged() {

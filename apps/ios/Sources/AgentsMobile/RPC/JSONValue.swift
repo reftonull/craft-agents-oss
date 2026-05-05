@@ -1,7 +1,7 @@
 import Foundation
 
 /// A small JSON value representation used by Craft Agents' WebSocket RPC envelopes.
-enum JSONValue: Codable, Equatable, Sendable {
+enum JSONValue: Codable, Equatable {
   case array([JSONValue])
   case bool(Bool)
   case null
@@ -60,10 +60,7 @@ extension JSONValue {
 }
 
 extension JSONDecoder {
-  static let craftRPC: JSONDecoder = {
-    let decoder = JSONDecoder()
-    return decoder
-  }()
+  static let craftRPC: JSONDecoder = .init()
 }
 
 extension JSONEncoder {
@@ -73,3 +70,5 @@ extension JSONEncoder {
     return encoder
   }()
 }
+
+extension JSONValue: Sendable {}

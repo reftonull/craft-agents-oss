@@ -3,6 +3,31 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
+## About this fork
+
+This repository currently tracks **Craft Agents OSS** while evolving it in a slightly different direction.
+
+The main work in this fork is a native Apple companion app called **Agents Mobile**:
+
+- a **UIKit** app for iPhone, iPad, and **Mac Catalyst**
+- built with **Tuist**, **FlowDeck**, and **TCA 2** (`ComposableArchitecture2`)
+- connected to the existing **Craft Agents desktop app's embedded server**
+- focused on letting you pair with a desktop app and continue that work from Apple devices
+
+In other words: this fork is not trying to replace the desktop app or server. It is extending Craft Agents with a native mobile/tablet/Mac companion surface.
+
+### What we are building right now
+
+The current mobile milestone is a strongly modeled **Sessions** experience:
+
+- manual pairing to a running desktop app using URL/token/workspace
+- persisted pairing so the app can reopen directly into the paired workspace
+- a native Sessions list with loading, refresh, retry, and re-pair states
+- mobile-adapted session rows derived from the desktop information hierarchy
+- a path toward live `session:event` updates next
+
+See [apps/ios/README.md](apps/ios/README.md) for the mobile-specific vision, architecture, and status.
+
 ## How it Works (Video)
 To understand what Craft Agents does and how it works watch this video.
 

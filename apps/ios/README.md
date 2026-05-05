@@ -1,27 +1,111 @@
 # Agents Mobile
 
-Native iOS companion app for connecting to the embedded Mobile Companion server in the Craft Agents desktop app.
+Agents Mobile is a native UIKit companion app for Craft Agents on iPhone, iPad, and Mac Catalyst.
 
-## Requirements
+It is designed to connect to the existing Craft Agents desktop app rather than replace it. The desktop app continues to own the embedded companion server, session state, tool execution, and workspace management. The mobile app is a focused client for picking up those sessions from Apple devices.
 
-- Xcode / Swift toolchain compatible with SwiftPM tools version 6.3
+## Vision
+
+The goal is a fast, native companion experience for existing Craft Agents work:
+
+- pair a phone, iPad, or Mac with a running desktop app
+- open directly into your paired workspace
+- browse and monitor sessions with native loading, refresh, and error feedback
+- eventually follow live session updates and continue conversations from mobile
+
+This app is intentionally not a second server implementation. It is a native front end over the desktop app's embedded RPC server.
+
+## Current status
+
+Today the app includes:
+
+- a native **UIKit** app lifecycle (`AppDelegate`, `SceneDelegate`, `UIWindow`)
+- **TCA 2** features and routing using `ComposableArchitecture2`
+- **Tuist** project generation and **FlowDeck** build/test workflows
+- **Mac Catalyst** support alongside iPhone/iPad
+- persisted pairing using Point-Free `@Shared`
+- a manual pairing flow using server URL, token, and optional workspace ID
+- a native Swift WebSocket/RPC client for the Craft companion protocol
+- root routing between:
+  - onboarding / pairing
+  - the main app shell
+- a first main screen for **Sessions** with:
+  - automatic fetch on entry
+  - pull-to-refresh
+  - first-load failure handling
+  - refresh failure while keeping existing rows visible
+  - re-pair support
+  - mobile-adapted session row presentation based on the desktop app
+
+Current limitations:
+
+- the Sessions screen is **fetch-only** for now
+- session rows are not selectable yet
+- no mobile chat/session detail screen yet
+- no live `session:event` subscription handling yet
+
+## Architecture
+
+### Desktop remains the source of truth
+
+Agents Mobile connects to the Craft Agents desktop app's embedded server over WebSocket RPC. The mobile app does not start or manage its own backend.
+
+Current RPC usage includes:
+
+- `server:getWorkspaces`
+- `sessions:get`
+- `session:event` (planned next for live updates)
+
+### Native app structure
+
+The app currently follows this shape:
+
+- **AppFeature**
+  - routes to onboarding when no pairing exists
+  - routes directly to the main app when pairing is already persisted
+- **ConnectionFeature**
+  - validates URL/token input
+  - connects to the server
+  - discovers/selects a workspace
+  - verifies the workspace by fetching sessions
+- **TabFeature**
+  - currently keeps a one-tab shell for future expansion
+- **SessionsFeature**
+  - owns session loading, refresh, failure states, and re-pair delegation
+
+## Development requirements
+
+- Xcode / Swift toolchain compatible with Swift tools `6.3`
 - Tuist
+- FlowDeck
 - SwiftFormat (`brew install swiftformat`)
 - SSH access to `git@github.com:pointfreeco/TCA26.git`
 
+The project currently targets:
+
+- iOS 26.0
+- Mac Catalyst
+
 ## Setup
 
-From this directory:
+From `apps/ios`:
 
 ```bash
 tuist install
 tuist generate
-swiftformat .
 ```
 
-Then open the generated workspace/project in Xcode.
+## Common commands
 
-## Formatting
+From `apps/ios`:
+
+```bash
+tuist generate
+flowdeck build
+flowdeck test
+swiftformat .
+swiftformat --lint .
+```
 
 From the repo root:
 
@@ -30,25 +114,14 @@ bun run ios:format
 bun run ios:format:check
 ```
 
-Or from `apps/ios` directly:
+## Near-term roadmap
 
-```bash
-swiftformat .
-swiftformat --lint .
-```
+- verify the Sessions screen more thoroughly against a live desktop server
+- add live session updates over `session:event`
+- open a first session detail / chat experience
+- improve row polish and status presentation
+- harden persisted pairing/token storage for production use
 
-## Current scope
+## Notes
 
-This is an initial scaffold only:
-
-- SwiftUI app target named `AgentsMobile`
-- Unit test target
-- Tuist project setup
-- Private TCA26 dependency via product `ComposableArchitecture2`
-
-Next steps:
-
-1. Add pairing screen
-2. Add WebSocket RPC client
-3. Implement handshake against the Craft Agents embedded server
-4. Load workspaces with `server:getWorkspaces`
+This README describes the current companion app direction in this fork. For the broader repository context and the desktop app, see the top-level [README](../../README.md).

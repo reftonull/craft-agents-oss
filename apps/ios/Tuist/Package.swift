@@ -8,6 +8,7 @@ import PackageDescription
   let packageSettings = PackageSettings(
     productTypes: [
       "ComposableArchitecture2": .framework,
+      "Sharing": .framework,
     ]
   )
 #endif
@@ -15,9 +16,10 @@ import PackageDescription
 let package = Package(
   name: "AgentsMobileDependencies",
   platforms: [
-    .iOS(.v17),
+    .iOS(.v26),
   ],
   dependencies: [
     .package(url: "git@github.com:pointfreeco/TCA26.git", branch: "main"),
+    .package(url: "https://github.com/pointfreeco/swift-sharing", from: "2.0.0"),
   ]
 )
