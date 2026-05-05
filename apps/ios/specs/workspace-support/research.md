@@ -12,7 +12,7 @@
 
 ## Decision: Modularize like isowords in a single Package.swift
 
-**Rationale**: Workspace support introduces durable core types, database persistence, and connection reuse. Keeping all of that in one broad target would make extraction harder later. The plan should follow the isowords style: small targets in one package, with domain models separated from database code and feature modules. `ClientModels` owns core mobile types, `Database` owns SQLiteData and depends on `ClientModels`, `RPCClient` owns the companion RPC client, `ConnectionFeature` owns setup UI/logic, and `AppFeature` composes the app shell, tabs, and sessions.
+**Rationale**: Workspace support introduces durable core types, database persistence, and connection reuse. Keeping all of that in one broad target would make extraction harder later. The plan should follow the isowords style: small targets in one package, with database-backed client models grouped with database bootstrap and migrations. `Database` owns core mobile types, SQLiteData-backed models, remote DTOs, and SQLiteData bootstrap; `RPCClient` owns the companion RPC client; `ConnectionFeature` owns setup UI/logic; and `AppFeature` composes the app shell, tabs, and sessions.
 
 **Alternatives considered**:
 

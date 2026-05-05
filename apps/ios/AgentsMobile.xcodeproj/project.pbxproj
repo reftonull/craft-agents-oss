@@ -7,20 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30BA9DB0ED699D350444216A /* Database in Frameworks */ = {isa = PBXBuildFile; productRef = 4D9DC51CFAE300335675D6DD /* Database */; };
 		472645327CF14FD060B2CCEE /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 453577FA71E47F64A803DA0D /* AppFeature */; };
 		48DF0D8D1B056B91527D5AC8 /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 2BAB288068D240AD636CE8E0 /* AppFeature */; };
 		5DA059A95AEE53F8E6F69C8A /* TestRPCWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC109B864E89FFC578915BE /* TestRPCWebSocket.swift */; };
 		5E8279126134E936033A8E96 /* AgentsMobileApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0C483B94B1A29BE189CCF /* AgentsMobileApp.swift */; };
-		7826F5241493EAE518FFA7A6 /* Database in Frameworks */ = {isa = PBXBuildFile; productRef = 8A2B94F92B1E0C9CB639CA61 /* Database */; };
+		7826F5241493EAE518FFA7A6 /* RPCClient in Frameworks */ = {isa = PBXBuildFile; productRef = E754E5F4558AAF58D6B9279D /* RPCClient */; };
 		84D610EAA73719AEFF0C4696 /* RPCProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BF016D383445B7379581A9 /* RPCProtocolTests.swift */; };
 		A2FBFF80137962B22C10642D /* AppObservationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D607A2190E71BCF26EBEB7 /* AppObservationTests.swift */; };
 		ACA023B5C7ABDCB774A29F9B /* SessionsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A74AC1D1571EDABC51FCD5 /* SessionsFeatureTests.swift */; };
 		B7D7041189F954AB5E873AEE /* ConnectionFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFD10E3CD435F13ACB4FCCF /* ConnectionFeatureTests.swift */; };
 		BFC8A0DF5D7412F924B47B2B /* LiveRPCClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2C2C37784EC0BF3A15D91C /* LiveRPCClientTests.swift */; };
-		C134110063EDA04769A4D945 /* RPCClient in Frameworks */ = {isa = PBXBuildFile; productRef = E754E5F4558AAF58D6B9279D /* RPCClient */; };
-		D9550A08C40F27458F9A64DD /* ClientModels in Frameworks */ = {isa = PBXBuildFile; productRef = DA061594DFDC92F3EAD0FF5C /* ClientModels */; };
+		C134110063EDA04769A4D945 /* DependenciesTestSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 64E1114A04C034655DD0CFA7 /* DependenciesTestSupport */; };
+		D9550A08C40F27458F9A64DD /* ConnectionFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 8E1C8007C755436CFBE031FA /* ConnectionFeature */; };
 		DA65957462DC7ECF36E24ECE /* AppFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118E8FA4C61CB009EC2C2CD2 /* AppFeatureTests.swift */; };
-		F6EF64918E74BA2CEB56378E /* ConnectionFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 8E1C8007C755436CFBE031FA /* ConnectionFeature */; };
+		F6EF64918E74BA2CEB56378E /* Database in Frameworks */ = {isa = PBXBuildFile; productRef = 8A2B94F92B1E0C9CB639CA61 /* Database */; };
 		F8906A4476147FF41E82974D /* WorkspacePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBD92E79726F5884B54E2CF /* WorkspacePersistenceTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,10 +46,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				48DF0D8D1B056B91527D5AC8 /* AppFeature in Frameworks */,
-				D9550A08C40F27458F9A64DD /* ClientModels in Frameworks */,
-				F6EF64918E74BA2CEB56378E /* ConnectionFeature in Frameworks */,
-				7826F5241493EAE518FFA7A6 /* Database in Frameworks */,
-				C134110063EDA04769A4D945 /* RPCClient in Frameworks */,
+				D9550A08C40F27458F9A64DD /* ConnectionFeature in Frameworks */,
+				F6EF64918E74BA2CEB56378E /* Database in Frameworks */,
+				7826F5241493EAE518FFA7A6 /* RPCClient in Frameworks */,
+				C134110063EDA04769A4D945 /* DependenciesTestSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				472645327CF14FD060B2CCEE /* AppFeature in Frameworks */,
+				30BA9DB0ED699D350444216A /* Database in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +164,7 @@
 			name = AgentsMobileApp;
 			packageProductDependencies = (
 				453577FA71E47F64A803DA0D /* AppFeature */,
+				4D9DC51CFAE300335675D6DD /* Database */,
 			);
 			productName = AgentsMobileApp;
 			productReference = E4C0F780B2D16193B02F5F49 /* AgentsMobileApp.app */;
@@ -181,10 +184,10 @@
 			name = AgentsMobileTests;
 			packageProductDependencies = (
 				2BAB288068D240AD636CE8E0 /* AppFeature */,
-				DA061594DFDC92F3EAD0FF5C /* ClientModels */,
 				8E1C8007C755436CFBE031FA /* ConnectionFeature */,
 				8A2B94F92B1E0C9CB639CA61 /* Database */,
 				E754E5F4558AAF58D6B9279D /* RPCClient */,
+				64E1114A04C034655DD0CFA7 /* DependenciesTestSupport */,
 			);
 			productName = AgentsMobileTests;
 			productReference = 370FEC56A84428E67A3FAB2F /* AgentsMobileTests.xctest */;
@@ -210,6 +213,9 @@
 				en,
 			);
 			mainGroup = 1FF840E9220218D5BDF59BDD;
+			packageReferences = (
+				0E855F7C9BCB6DCE9C21DE1A /* XCRemoteSwiftPackageReference "swift-dependencies" */,
+			);
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -473,6 +479,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		0E855F7C9BCB6DCE9C21DE1A /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-dependencies";
+			requirement = {
+				branch = 26;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		2BAB288068D240AD636CE8E0 /* AppFeature */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -482,6 +499,15 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = AppFeature;
 		};
+		4D9DC51CFAE300335675D6DD /* Database */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Database;
+		};
+		64E1114A04C034655DD0CFA7 /* DependenciesTestSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E855F7C9BCB6DCE9C21DE1A /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = DependenciesTestSupport;
+		};
 		8A2B94F92B1E0C9CB639CA61 /* Database */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Database;
@@ -489,10 +515,6 @@
 		8E1C8007C755436CFBE031FA /* ConnectionFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ConnectionFeature;
-		};
-		DA061594DFDC92F3EAD0FF5C /* ClientModels */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ClientModels;
 		};
 		E754E5F4558AAF58D6B9279D /* RPCClient */ = {
 			isa = XCSwiftPackageProductDependency;

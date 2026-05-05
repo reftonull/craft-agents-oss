@@ -1,8 +1,17 @@
 import AppFeature
+import Database
+import Dependencies
 import UIKit
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
+  override init() {
+    try! prepareDependencies {
+      try $0.bootstrapDatabase()
+    }
+    super.init()
+  }
+
   func application(
     _ application: UIApplication,
     configurationForConnecting connectingSceneSession: UISceneSession,

@@ -9,7 +9,6 @@ let package = Package(
   ],
   products: [
     .library(name: "AppFeature", targets: ["AppFeature"]),
-    .library(name: "ClientModels", targets: ["ClientModels"]),
     .library(name: "ConnectionFeature", targets: ["ConnectionFeature"]),
     .library(name: "Database", targets: ["Database"]),
     .library(name: "RPCClient", targets: ["RPCClient"]),
@@ -25,7 +24,6 @@ let package = Package(
     .target(
       name: "AppFeature",
       dependencies: [
-        "ClientModels",
         "ConnectionFeature",
         "Database",
         "RPCClient",
@@ -37,7 +35,6 @@ let package = Package(
       name: "AppFeatureTests",
       dependencies: [
         "AppFeature",
-        "ClientModels",
         "ConnectionFeature",
         "Database",
         "RPCClient",
@@ -47,12 +44,9 @@ let package = Package(
       ]
     ),
     .target(
-      name: "ClientModels"
-    ),
-    .target(
       name: "ConnectionFeature",
       dependencies: [
-        "ClientModels",
+        "Database",
         "RPCClient",
         .product(name: "ComposableArchitecture2", package: "TCA26"),
       ]
@@ -60,8 +54,8 @@ let package = Package(
     .testTarget(
       name: "ConnectionFeatureTests",
       dependencies: [
-        "ClientModels",
         "ConnectionFeature",
+        "Database",
         "RPCClient",
         .product(name: "ComposableArchitecture2", package: "TCA26"),
       ]
@@ -69,7 +63,6 @@ let package = Package(
     .target(
       name: "Database",
       dependencies: [
-        "ClientModels",
         .product(name: "Dependencies", package: "swift-dependencies"),
         .product(name: "Sharing", package: "swift-sharing"),
         .product(name: "SQLiteData", package: "sqlite-data"),
@@ -78,10 +71,8 @@ let package = Package(
     .testTarget(
       name: "DatabaseTests",
       dependencies: [
-        "ClientModels",
         "Database",
-        .product(name: "Sharing", package: "swift-sharing"),
-        .product(name: "SQLiteDataTestSupport", package: "sqlite-data"),
+        .product(name: "DependenciesTestSupport", package: "swift-dependencies"),
       ]
     ),
     .target(

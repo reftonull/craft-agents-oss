@@ -17,7 +17,7 @@ Introduce first-class workspace support by replacing the proof-of-concept single
 **Project Type**: Mobile app under `/Users/laksh/Developer/craft-agents-oss/apps/ios`  
 **Performance Goals**: Launch routing uses local persisted workspace state immediately; workspace switcher opens without a network round trip; switching avoids displaying previous-workspace content as current  
 **Constraints**: Keep workspace UI simple; preserve companion-client model; use FlowDeck for Apple platform verification; avoid direct Apple CLI tooling; prefer tight domain models without premature abstractions  
-**Scale/Scope**: One Package.swift with small modules following the isowords style: `ClientModels`, `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature`; one root app shell, one workspace switcher, one add-workspace sheet, saved workspace persistence, selected workspace persistence, current Sessions tab re-scoping
+**Scale/Scope**: One Package.swift with small modules following the isowords style: `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature`; one root app shell, one workspace switcher, one add-workspace sheet, saved workspace persistence, selected workspace persistence, current Sessions tab re-scoping
 
 ## Constitution Check
 
@@ -55,12 +55,11 @@ Introduce first-class workspace support by replacing the proof-of-concept single
 ├── Package.swift                         # Single package defining all app modules
 ├── project.yml                           # App target depends on AppFeature product
 ├── Sources/
-│   ├── ClientModels/                     # Core mobile domain and DTO models
-│   │   ├── Workspace.swift
-│   │   └── RemoteModels.swift
-│   ├── Database/                         # Extractable database module depending on ClientModels
-│   │   ├── Schema.swift                  # SQLiteData bootstrap and WorkspaceRecord schema/migration
-│   │   └── WorkspacePersistence.swift
+│   ├── Database/                         # SQLiteData-backed models, selected workspace key, bootstrap, migrations
+│   │   ├── Workspace.swift               # SQLiteData-backed client workspace model
+│   │   ├── SelectedWorkspacePreference.swift
+│   │   ├── RemoteModels.swift
+│   │   └── Schema.swift                  # SQLiteData bootstrap and Workspace migration
 │   ├── RPCClient/                        # Existing companion RPC protocol/client/dependency
 │   ├── ConnectionFeature/                # Connection setup feature and view controller
 │   └── AppFeature/                       # App shell, tabs, sessions, root view controller
@@ -78,13 +77,13 @@ Introduce first-class workspace support by replacing the proof-of-concept single
     └── RPCClientTests/                   # Existing RPC protocol/client tests
 ```
 
-**Structure Decision**: Move from one broad target to small modules in the same `Package.swift`, following the isowords style of feature, model, and database modules. Put core shared mobile types in `ClientModels`. Put SQLiteData bootstrap, schema, migrations, and persistence in `Database`, which depends on `ClientModels`. Put the existing connection flow in `ConnectionFeature`. Keep app composition, tabs, and Sessions in `AppFeature`. Tests live beside the module they verify. This modularization must happen before workspace feature/UI work so the database and connection boundaries are settled first.
+**Structure Decision**: Move from one broad target to small modules in the same `Package.swift`, following the isowords style of feature and database modules. Put core shared mobile types, including the SQLiteData-backed `Workspace` client model, remote DTOs, selected-workspace shared key, SQLiteData bootstrap, and migrations in `Database`. Put the existing connection flow in `ConnectionFeature`. Keep app composition, tabs, and Sessions in `AppFeature`. Tests live beside the module they verify. This modularization must happen before workspace feature/UI work so the database and connection boundaries are settled first.
 
 ## Implementation Stages
 
 ### Stage 1: SQLiteData Foundation
 
-Set up the module layout and database before implementing workspace routing or UI. Add `ClientModels`, `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature` targets in the single `Package.swift`. Add the app database bootstrap, initial migration, and `WorkspaceRecord` schema in the `Database` module. Add focused `DatabaseTests` that can insert, fetch, enforce the uniqueness rule, and delete saved workspace records. This stage must be complete before replacing the proof-of-concept `Pairing` flow.
+Set up the module layout and database before implementing workspace routing or UI. Add `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature` targets in the single `Package.swift`. Add the SQLiteData-backed `Workspace` client model, app database bootstrap, and initial migration. Add focused `DatabaseTests` that can insert, fetch, enforce the uniqueness rule, and delete saved workspaces directly through SQLiteData APIs. This stage must be complete before replacing the proof-of-concept `Pairing` flow.
 
 ### Stage 2: Workspace Selection Preference
 
@@ -96,7 +95,7 @@ Replace the single optional `Pairing` root decision with workspace-aware app sta
 
 ### Stage 4: Connection Flow Reuse
 
-Reuse `ConnectionFeature` for both first setup and add-workspace. First setup is the root route and is not dismissible. Add-workspace is presented from the main app as a dismissible sheet; cancelling leaves the selected workspace untouched, while success saves a `WorkspaceRecord` and makes it available to the switcher.
+Reuse `ConnectionFeature` for both first setup and add-workspace. First setup is the root route and is not dismissible. Add-workspace is presented from the main app as a dismissible sheet; cancelling leaves the selected workspace untouched, while success saves a `Workspace` and makes it available to the switcher.
 
 ### Stage 5: Simple Workspace Switcher UI
 

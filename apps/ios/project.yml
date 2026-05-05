@@ -10,6 +10,9 @@ settings:
 packages:
   AgentsMobilePackage:
     path: .
+  swift-dependencies:
+    url: https://github.com/pointfreeco/swift-dependencies
+    branch: "26"
 targets:
   AgentsMobileApp:
     type: application
@@ -20,6 +23,8 @@ targets:
     dependencies:
       - package: AgentsMobilePackage
         product: AppFeature
+      - package: AgentsMobilePackage
+        product: Database
     info:
       path: Derived/InfoPlists/AgentsMobile-Info.plist
       properties:
@@ -52,13 +57,13 @@ targets:
       - package: AgentsMobilePackage
         product: AppFeature
       - package: AgentsMobilePackage
-        product: ClientModels
-      - package: AgentsMobilePackage
         product: ConnectionFeature
       - package: AgentsMobilePackage
         product: Database
       - package: AgentsMobilePackage
         product: RPCClient
+      - package: swift-dependencies
+        product: DependenciesTestSupport
     info:
       path: Derived/InfoPlists/AgentsMobileTests-Info.plist
       properties: {}

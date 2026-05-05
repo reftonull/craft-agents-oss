@@ -20,7 +20,6 @@ description: "Task list for Workspace Support implementation"
 ## Path Conventions
 
 - iOS project root: `/Users/laksh/Developer/craft-agents-oss/apps/ios`
-- Core models module: `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ClientModels/`
 - Database module: `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/`
 - RPC module: `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/RPCClient/`
 - Connection module: `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ConnectionFeature/`
@@ -32,17 +31,17 @@ description: "Task list for Workspace Support implementation"
 
 **Purpose**: Establish and compile the module layout before implementing workspace persistence or UI.
 
-- [X] T001 Update `/Users/laksh/Developer/craft-agents-oss/apps/ios/Package.swift` to define `ClientModels`, `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature` targets/products in one package
-- [X] T002 Update `/Users/laksh/Developer/craft-agents-oss/apps/ios/Package.swift` so `Database` depends on `ClientModels`, `SQLiteData`, `Sharing`, and StructuredQueries support from SQLiteData
-- [X] T003 Update `/Users/laksh/Developer/craft-agents-oss/apps/ios/Package.swift` so `ConnectionFeature` depends on `ClientModels`, `RPCClient`, and `ComposableArchitecture2`
-- [X] T004 Update `/Users/laksh/Developer/craft-agents-oss/apps/ios/Package.swift` so `AppFeature` depends on `ClientModels`, `Database`, `RPCClient`, `ConnectionFeature`, `ComposableArchitecture2`, and `Sharing`
+- [X] T001 Update `/Users/laksh/Developer/craft-agents-oss/apps/ios/Package.swift` to define `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature` targets/products in one package
+- [X] T002 Update `/Users/laksh/Developer/craft-agents-oss/apps/ios/Package.swift` so `Database` owns shared models and depends on `SQLiteData`, `Sharing`, and StructuredQueries support from SQLiteData
+- [X] T003 Update `/Users/laksh/Developer/craft-agents-oss/apps/ios/Package.swift` so `ConnectionFeature` depends on `Database`, `RPCClient`, and `ComposableArchitecture2`
+- [X] T004 Update `/Users/laksh/Developer/craft-agents-oss/apps/ios/Package.swift` so `AppFeature` depends on `Database`, `RPCClient`, `ConnectionFeature`, `ComposableArchitecture2`, and `Sharing`
 - [X] T005 Update `/Users/laksh/Developer/craft-agents-oss/apps/ios/Package.swift` to add `DatabaseTests`, `ConnectionFeatureTests`, `AppFeatureTests`, and `RPCClientTests` test targets with module-specific dependencies
 - [X] T006 Update `/Users/laksh/Developer/craft-agents-oss/apps/ios/project.yml` so the app target depends on the `AppFeature` package product instead of the old broad product
 - [X] T007 Update `/Users/laksh/Developer/craft-agents-oss/apps/ios/project.yml` so the test target reads from `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests` and can import the module products it tests
-- [X] T008 Create `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ClientModels/Workspace.swift` for shared workspace domain types
-- [X] T009 Create `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ClientModels/RemoteModels.swift` for shared remote workspace/session DTOs
+- [X] T008 Create `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/Workspace.swift` for shared workspace domain types
+- [X] T009 Create `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/RemoteModels.swift` for shared remote workspace/session DTOs
 - [X] T010 Create `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/Schema.swift` for SQLiteData bootstrap, migrations, and workspace schema
-- [X] T011 Create `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/WorkspacePersistence.swift` for saved workspace persistence operations and selected workspace preference helpers
+- [X] T011 Create `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/SelectedWorkspacePreference.swift` for the selected workspace shared key
 - [X] T012 Move existing RPC source files from `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AgentsMobile/RPC/` to `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/RPCClient/`
 - [X] T013 Move existing connection files from `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AgentsMobile/ConnectionFeature.swift` and `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AgentsMobile/ConnectionViewController.swift` to `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ConnectionFeature/`
 - [X] T014 Move app shell and sessions files from `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AgentsMobile/` to `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/`
@@ -50,11 +49,11 @@ description: "Task list for Workspace Support implementation"
 - [X] T016 Move existing connection tests from `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AgentsMobileTests/ConnectionFeatureTests.swift` to `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/ConnectionFeatureTests/ConnectionFeatureTests.swift`
 - [X] T017 Move existing app and sessions tests from `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AgentsMobileTests/` to `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AppFeatureTests/`
 - [X] T018 Create `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift` for database-backed workspace persistence tests
-- [X] T019 Move `RemoteWorkspace`, `RemoteSession`, and `RemoteSessionStatus` into `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ClientModels/RemoteModels.swift`
+- [X] T019 Move `RemoteWorkspace`, `RemoteSession`, and `RemoteSessionStatus` into `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/RemoteModels.swift`
 - [X] T020 Fix module imports after the split in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/RPCClient/`
 - [X] T021 Fix module imports after the split in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ConnectionFeature/`
 - [X] T022 Fix module imports after the split in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/`
-- [X] T023 Verify module-specific test targets import `ClientModels`, `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature` and compile via FlowDeck in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AppFeatureTests/AppFeatureTests.swift`
+- [X] T023 Verify module-specific test targets import `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature` and compile via FlowDeck in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/AppFeatureTests/AppFeatureTests.swift`
 
 **Checkpoint**: The package is modularized, module imports are fixed, and `flowdeck build`/`flowdeck test` pass before database behavior is implemented.
 
@@ -68,21 +67,21 @@ description: "Task list for Workspace Support implementation"
 
 ### Tests for Workspace Persistence
 
-- [ ] T024 [P] Add failing tests for inserting and fetching `WorkspaceRecord` values in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift`
-- [ ] T025 [P] Add failing tests for the `WorkspaceRecord` uniqueness rule on normalized server URL plus remote workspace ID in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift`
-- [ ] T026 [P] Add failing tests for deleting a saved workspace and resolving fallback selection in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift`
-- [ ] T027 [P] Add failing tests for selected workspace user-defaults preference read/write/clear behavior in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift`
+- [X] T024 [P] Add failing tests for inserting and fetching SQLiteData-backed `Workspace` values in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift`
+- [X] T025 [P] Add failing tests for the `Workspace` uniqueness rule on normalized server URL plus remote workspace ID in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift`
+- [X] T026 [P] Add failing tests for deleting a saved workspace and resolving fallback selection in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift`
+- [X] T027 [P] Define selected workspace user-defaults shared key; direct read/write/clear test omitted after review because it only tests Sharing's app-storage behavior
 
 ### Foundational Implementation
 
-- [ ] T028 Define saved/current workspace domain types beyond the temporary `Pairing` bridge in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ClientModels/Workspace.swift`
-- [ ] T029 Implement `bootstrapDatabase()` using SQLiteData and register the initial migrator in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/Schema.swift`
-- [ ] T030 Define `WorkspaceRecord` as the only new database-backed workspace entity in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/Schema.swift`
-- [ ] T031 Add the initial `WorkspaceRecord` migration with a uniqueness rule for normalized server URL plus remote workspace ID in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/Schema.swift`
-- [ ] T032 Implement saved workspace insert, fetch, upsert, uniqueness handling, delete, and fallback selection helpers in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/WorkspacePersistence.swift`
-- [ ] T033 Implement the selected workspace ID `@Shared(.appStorage(...))` preference helper in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/WorkspacePersistence.swift`
-- [ ] T034 Wire `prepareDependencies` and `bootstrapDatabase()` at app startup in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppRoot.swift`
-- [ ] T035 Run FlowDeck tests for completed database persistence behavior from `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift`
+- [X] T028 Define saved/current workspace domain types beyond the temporary `Pairing` bridge in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/Workspace.swift`
+- [X] T029 Implement `bootstrapDatabase()` using SQLiteData and register the initial migrator in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/Schema.swift`
+- [X] T030 Define `Workspace` as the SQLiteData-backed client model in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/Workspace.swift`
+- [X] T031 Add the initial `Workspace` migration with a uniqueness rule for normalized server URL plus remote workspace ID in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/Schema.swift`
+- [X] T032 Verify saved workspace insert, fetch, uniqueness, delete, and fallback behavior directly through SQLiteData APIs in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift`
+- [X] T033 Implement the selected workspace ID `@Shared(.appStorage(...))` key for direct feature usage in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/Database/SelectedWorkspacePreference.swift`
+- [X] T034 Wire `prepareDependencies` and `bootstrapDatabase()` at app startup in `/Users/laksh/Developer/craft-agents-oss/apps/ios/App/AgentsMobileApp.swift`
+- [X] T035 Run FlowDeck tests for completed database persistence behavior from `/Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift`
 
 **Checkpoint**: SQLiteData is bootstrapped, saved workspaces persist in the `Database` module, and selected workspace ID persists as a single user-defaults preference.
 
@@ -103,7 +102,7 @@ description: "Task list for Workspace Support implementation"
 ### Implementation for User Story 1
 
 - [ ] T039 [US1] Replace single optional `Pairing` launch decision with saved-workspace lookup in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppFeature.swift`
-- [ ] T040 [US1] Convert successful first setup into a saved `WorkspaceRecord` plus selected workspace preference update in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppFeature.swift`
+- [ ] T040 [US1] Convert successful first setup into a saved `Workspace` plus selected workspace preference update in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppFeature.swift`
 - [ ] T041 [US1] Preserve root connection setup as non-dismissible onboarding when no saved workspaces exist in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/AppFeature/AppViewController.swift`
 - [ ] T042 [US1] Ensure `ConnectionFeature` exposes enough remote workspace display data to save a recognizable workspace in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ConnectionFeature/ConnectionFeature.swift`
 - [ ] T043 [US1] Update first-setup copy and failure display if needed in `/Users/laksh/Developer/craft-agents-oss/apps/ios/Sources/ConnectionFeature/ConnectionViewController.swift`
@@ -268,8 +267,8 @@ description: "Task list for Workspace Support implementation"
 ## Parallel Example: Foundational Database Tests
 
 ```bash
-Task T024: "Add failing tests for inserting and fetching WorkspaceRecord values in /Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift"
-Task T025: "Add failing tests for the WorkspaceRecord uniqueness rule on normalized server URL plus remote workspace ID in /Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift"
+Task T024: "Add failing tests for inserting and fetching Workspace values in /Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift"
+Task T025: "Add failing tests for the Workspace uniqueness rule on normalized server URL plus remote workspace ID in /Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift"
 Task T026: "Add failing tests for deleting a saved workspace and resolving fallback selection in /Users/laksh/Developer/craft-agents-oss/apps/ios/Tests/DatabaseTests/WorkspacePersistenceTests.swift"
 ```
 
@@ -295,7 +294,7 @@ Task: "Add UI contract coverage notes for top-leading button and switcher in /Us
 
 ### Incremental Delivery
 
-1. Modular package ready: `ClientModels`, `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature` compile independently. ✅
+1. Modular package ready: `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature` compile independently. ✅
 2. Foundation ready: saved workspaces persist in SQLiteData and selected workspace preference persists in user defaults.
 3. US1: first-time setup saves and selects a workspace.
 4. US2: returning launch opens current workspace.

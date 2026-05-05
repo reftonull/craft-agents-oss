@@ -10,7 +10,7 @@ Auto-generated from all feature plans. Last updated: 2026-05-05
 - Sharing for lightweight persisted app preferences such as current workspace selection
 - SQLiteData and StructuredQueries for durable local workspace records
 - Existing Craft companion RPC client in an `RPCClient` module for remote workspace discovery and session loading
-- Single Package.swift with small modules following the isowords style: `ClientModels`, `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature`
+- Single Package.swift with small modules following the isowords style: `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature`
 - FlowDeck for Apple platform build, test, launch, and smoke verification
 
 ## Project Structure
@@ -19,7 +19,6 @@ Auto-generated from all feature plans. Last updated: 2026-05-05
 apps/ios/
 ├── Package.swift
 ├── Sources/
-│   ├── ClientModels/
 │   ├── Database/
 │   ├── RPCClient/
 │   ├── ConnectionFeature/
@@ -52,7 +51,12 @@ swiftformat --lint .
 
 ## Recent Changes
 
-- workspace-support: Plans a modular package layout with `ClientModels`, `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature`, plus persisted workspace records, current workspace selection, a top-leading workspace button, a simple switcher, add-workspace sheet, and current-workspace logout.
+- workspace-support: Plans a modular package layout with `Database`, `RPCClient`, `ConnectionFeature`, and `AppFeature`, plus persisted workspaces, current workspace selection, a top-leading workspace button, a simple switcher, add-workspace sheet, and current-workspace logout.
 
 <!-- MANUAL ADDITIONS START -->
+
+## Dependency Source Review Policy
+
+When inspecting source files from dependencies, look ONLY at their visible API surface and comments/documentation. Do NOT read or rely on dependency implementation details. Looking at dependency example apps, sample code, README files, and public documentation is highly recommended when learning correct usage patterns.
+
 <!-- MANUAL ADDITIONS END -->
