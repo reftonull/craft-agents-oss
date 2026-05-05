@@ -40,6 +40,9 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 .idea
 
 # Xcode generated files
+.build/
+*.swiftpm/
+Packages/
 *.xcodeproj
 !apps/ios/AgentsMobile.xcodeproj/
 !apps/ios/AgentsMobile.xcodeproj/**

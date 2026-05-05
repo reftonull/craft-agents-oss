@@ -75,6 +75,12 @@ The app currently follows this shape:
 
 ## Development requirements
 
+Development in this app is governed by the [Agents Mobile Constitution](./specs/memory/constitution.md).
+Feature plans and reviews must preserve the companion-client model, prioritize sessions/chat,
+keep workspace context clear, model important states tightly, prefer duplication over premature
+abstraction, choose native UI versus agent-driven work deliberately, and include testing in some
+form, such as automated tests or FlowDeck smoke tests.
+
 - Xcode / Swift toolchain compatible with Swift tools `6.3`
 - XcodeGen (`brew install xcodegen`) when regenerating `AgentsMobile.xcodeproj` from `project.yml`
 - FlowDeck

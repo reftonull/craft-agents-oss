@@ -1,4 +1,4 @@
-import AgentsMobileCore
+import AppFeature
 import UIKit
 
 @main

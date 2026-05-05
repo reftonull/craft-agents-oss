@@ -7,30 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		142BB1FDC27378BC785B6B2C /* AppFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F5D12C5CB0C3AD5A67FBA8 /* AppFeatureTests.swift */; };
-		15F7B2B835EEADDE542DD892 /* ConnectionFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B215D3D4EA15AB1A6FC2A9 /* ConnectionFeatureTests.swift */; };
-		4576861BC1682C986B0C2EFA /* AppObservationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12982B8C423A468E748BC99 /* AppObservationTests.swift */; };
-		472645327CF14FD060B2CCEE /* AgentsMobileCore in Frameworks */ = {isa = PBXBuildFile; productRef = 217EC5306FEE558134F5EA19 /* AgentsMobileCore */; };
-		48DF0D8D1B056B91527D5AC8 /* AgentsMobileCore in Frameworks */ = {isa = PBXBuildFile; productRef = D21B8FA7515D97DDFA18FE07 /* AgentsMobileCore */; };
-		5C086FD616297381D8951E9D /* TestRPCWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A5AA951ABE3428F10EAB38 /* TestRPCWebSocket.swift */; };
+		472645327CF14FD060B2CCEE /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 453577FA71E47F64A803DA0D /* AppFeature */; };
+		48DF0D8D1B056B91527D5AC8 /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 2BAB288068D240AD636CE8E0 /* AppFeature */; };
+		5DA059A95AEE53F8E6F69C8A /* TestRPCWebSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC109B864E89FFC578915BE /* TestRPCWebSocket.swift */; };
 		5E8279126134E936033A8E96 /* AgentsMobileApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0C483B94B1A29BE189CCF /* AgentsMobileApp.swift */; };
-		97CA8913EDC9319F70F960CB /* LiveRPCClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFFC1FCF74B0C193BB0974B /* LiveRPCClientTests.swift */; };
-		9F7CB66A380FCC5BB01D1DB7 /* SessionsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E97958F4C3D2456C9547A57 /* SessionsFeatureTests.swift */; };
-		F97D0C09FB525A6D99AE9AD3 /* RPCProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1F9D157D67AE9E9CD63FE1 /* RPCProtocolTests.swift */; };
+		7826F5241493EAE518FFA7A6 /* Database in Frameworks */ = {isa = PBXBuildFile; productRef = 8A2B94F92B1E0C9CB639CA61 /* Database */; };
+		84D610EAA73719AEFF0C4696 /* RPCProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BF016D383445B7379581A9 /* RPCProtocolTests.swift */; };
+		A2FBFF80137962B22C10642D /* AppObservationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D607A2190E71BCF26EBEB7 /* AppObservationTests.swift */; };
+		ACA023B5C7ABDCB774A29F9B /* SessionsFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A74AC1D1571EDABC51FCD5 /* SessionsFeatureTests.swift */; };
+		B7D7041189F954AB5E873AEE /* ConnectionFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFD10E3CD435F13ACB4FCCF /* ConnectionFeatureTests.swift */; };
+		BFC8A0DF5D7412F924B47B2B /* LiveRPCClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2C2C37784EC0BF3A15D91C /* LiveRPCClientTests.swift */; };
+		C134110063EDA04769A4D945 /* RPCClient in Frameworks */ = {isa = PBXBuildFile; productRef = E754E5F4558AAF58D6B9279D /* RPCClient */; };
+		D9550A08C40F27458F9A64DD /* ClientModels in Frameworks */ = {isa = PBXBuildFile; productRef = DA061594DFDC92F3EAD0FF5C /* ClientModels */; };
+		DA65957462DC7ECF36E24ECE /* AppFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118E8FA4C61CB009EC2C2CD2 /* AppFeatureTests.swift */; };
+		F6EF64918E74BA2CEB56378E /* ConnectionFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 8E1C8007C755436CFBE031FA /* ConnectionFeature */; };
+		F8906A4476147FF41E82974D /* WorkspacePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBD92E79726F5884B54E2CF /* WorkspacePersistenceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0CB0C483B94B1A29BE189CCF /* AgentsMobileApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentsMobileApp.swift; sourceTree = "<group>"; };
+		118E8FA4C61CB009EC2C2CD2 /* AppFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureTests.swift; sourceTree = "<group>"; };
 		370FEC56A84428E67A3FAB2F /* AgentsMobileTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = AgentsMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B1F9D157D67AE9E9CD63FE1 /* RPCProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCProtocolTests.swift; sourceTree = "<group>"; };
-		4E97958F4C3D2456C9547A57 /* SessionsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsFeatureTests.swift; sourceTree = "<group>"; };
 		5D1E4C9194D4C3C83AB29F18 /* ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ios; path = .; sourceTree = SOURCE_ROOT; };
-		B0B215D3D4EA15AB1A6FC2A9 /* ConnectionFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionFeatureTests.swift; sourceTree = "<group>"; };
-		C0F5D12C5CB0C3AD5A67FBA8 /* AppFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeatureTests.swift; sourceTree = "<group>"; };
-		C12982B8C423A468E748BC99 /* AppObservationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppObservationTests.swift; sourceTree = "<group>"; };
-		E4A5AA951ABE3428F10EAB38 /* TestRPCWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRPCWebSocket.swift; sourceTree = "<group>"; };
+		64BF016D383445B7379581A9 /* RPCProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCProtocolTests.swift; sourceTree = "<group>"; };
+		92A74AC1D1571EDABC51FCD5 /* SessionsFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsFeatureTests.swift; sourceTree = "<group>"; };
+		9AC109B864E89FFC578915BE /* TestRPCWebSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRPCWebSocket.swift; sourceTree = "<group>"; };
+		BBBD92E79726F5884B54E2CF /* WorkspacePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacePersistenceTests.swift; sourceTree = "<group>"; };
+		D9D607A2190E71BCF26EBEB7 /* AppObservationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppObservationTests.swift; sourceTree = "<group>"; };
+		DFFD10E3CD435F13ACB4FCCF /* ConnectionFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionFeatureTests.swift; sourceTree = "<group>"; };
 		E4C0F780B2D16193B02F5F49 /* AgentsMobileApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = AgentsMobileApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		EAFFC1FCF74B0C193BB0974B /* LiveRPCClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveRPCClientTests.swift; sourceTree = "<group>"; };
+		EE2C2C37784EC0BF3A15D91C /* LiveRPCClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveRPCClientTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +44,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48DF0D8D1B056B91527D5AC8 /* AgentsMobileCore in Frameworks */,
+				48DF0D8D1B056B91527D5AC8 /* AppFeature in Frameworks */,
+				D9550A08C40F27458F9A64DD /* ClientModels in Frameworks */,
+				F6EF64918E74BA2CEB56378E /* ConnectionFeature in Frameworks */,
+				7826F5241493EAE518FFA7A6 /* Database in Frameworks */,
+				C134110063EDA04769A4D945 /* RPCClient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				472645327CF14FD060B2CCEE /* AgentsMobileCore in Frameworks */,
+				472645327CF14FD060B2CCEE /* AppFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,21 +84,38 @@
 		214AD54283D4CF72578AB672 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				6A16B062D6C82EE8DF49D828 /* AgentsMobileTests */,
+				485CEE7E38C2D67FAD914EFA /* AppFeatureTests */,
+				720402400DD9522B25E341CD /* ConnectionFeatureTests */,
+				41906FE9D3A48E6E224C795C /* DatabaseTests */,
+				D8D6626E687224DC3790CCFF /* RPCClientTests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		6A16B062D6C82EE8DF49D828 /* AgentsMobileTests */ = {
+		41906FE9D3A48E6E224C795C /* DatabaseTests */ = {
 			isa = PBXGroup;
 			children = (
-				C0F5D12C5CB0C3AD5A67FBA8 /* AppFeatureTests.swift */,
-				C12982B8C423A468E748BC99 /* AppObservationTests.swift */,
-				B0B215D3D4EA15AB1A6FC2A9 /* ConnectionFeatureTests.swift */,
-				4E97958F4C3D2456C9547A57 /* SessionsFeatureTests.swift */,
-				E525501355B668A3C0DE0819 /* RPC */,
+				BBBD92E79726F5884B54E2CF /* WorkspacePersistenceTests.swift */,
 			);
-			path = AgentsMobileTests;
+			path = DatabaseTests;
+			sourceTree = "<group>";
+		};
+		485CEE7E38C2D67FAD914EFA /* AppFeatureTests */ = {
+			isa = PBXGroup;
+			children = (
+				118E8FA4C61CB009EC2C2CD2 /* AppFeatureTests.swift */,
+				D9D607A2190E71BCF26EBEB7 /* AppObservationTests.swift */,
+				92A74AC1D1571EDABC51FCD5 /* SessionsFeatureTests.swift */,
+			);
+			path = AppFeatureTests;
+			sourceTree = "<group>";
+		};
+		720402400DD9522B25E341CD /* ConnectionFeatureTests */ = {
+			isa = PBXGroup;
+			children = (
+				DFFD10E3CD435F13ACB4FCCF /* ConnectionFeatureTests.swift */,
+			);
+			path = ConnectionFeatureTests;
 			sourceTree = "<group>";
 		};
 		C32106DA1CB8828C6DF46DAB /* Products */ = {
@@ -100,14 +127,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E525501355B668A3C0DE0819 /* RPC */ = {
+		D8D6626E687224DC3790CCFF /* RPCClientTests */ = {
 			isa = PBXGroup;
 			children = (
-				EAFFC1FCF74B0C193BB0974B /* LiveRPCClientTests.swift */,
-				4B1F9D157D67AE9E9CD63FE1 /* RPCProtocolTests.swift */,
-				E4A5AA951ABE3428F10EAB38 /* TestRPCWebSocket.swift */,
+				EE2C2C37784EC0BF3A15D91C /* LiveRPCClientTests.swift */,
+				64BF016D383445B7379581A9 /* RPCProtocolTests.swift */,
+				9AC109B864E89FFC578915BE /* TestRPCWebSocket.swift */,
 			);
-			path = RPC;
+			path = RPCClientTests;
 			sourceTree = "<group>";
 		};
 		E9840CF0C2FDC423328D95BF /* App */ = {
@@ -134,7 +161,7 @@
 			);
 			name = AgentsMobileApp;
 			packageProductDependencies = (
-				217EC5306FEE558134F5EA19 /* AgentsMobileCore */,
+				453577FA71E47F64A803DA0D /* AppFeature */,
 			);
 			productName = AgentsMobileApp;
 			productReference = E4C0F780B2D16193B02F5F49 /* AgentsMobileApp.app */;
@@ -153,7 +180,11 @@
 			);
 			name = AgentsMobileTests;
 			packageProductDependencies = (
-				D21B8FA7515D97DDFA18FE07 /* AgentsMobileCore */,
+				2BAB288068D240AD636CE8E0 /* AppFeature */,
+				DA061594DFDC92F3EAD0FF5C /* ClientModels */,
+				8E1C8007C755436CFBE031FA /* ConnectionFeature */,
+				8A2B94F92B1E0C9CB639CA61 /* Database */,
+				E754E5F4558AAF58D6B9279D /* RPCClient */,
 			);
 			productName = AgentsMobileTests;
 			productReference = 370FEC56A84428E67A3FAB2F /* AgentsMobileTests.xctest */;
@@ -193,13 +224,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				142BB1FDC27378BC785B6B2C /* AppFeatureTests.swift in Sources */,
-				4576861BC1682C986B0C2EFA /* AppObservationTests.swift in Sources */,
-				15F7B2B835EEADDE542DD892 /* ConnectionFeatureTests.swift in Sources */,
-				97CA8913EDC9319F70F960CB /* LiveRPCClientTests.swift in Sources */,
-				F97D0C09FB525A6D99AE9AD3 /* RPCProtocolTests.swift in Sources */,
-				9F7CB66A380FCC5BB01D1DB7 /* SessionsFeatureTests.swift in Sources */,
-				5C086FD616297381D8951E9D /* TestRPCWebSocket.swift in Sources */,
+				DA65957462DC7ECF36E24ECE /* AppFeatureTests.swift in Sources */,
+				A2FBFF80137962B22C10642D /* AppObservationTests.swift in Sources */,
+				B7D7041189F954AB5E873AEE /* ConnectionFeatureTests.swift in Sources */,
+				BFC8A0DF5D7412F924B47B2B /* LiveRPCClientTests.swift in Sources */,
+				84D610EAA73719AEFF0C4696 /* RPCProtocolTests.swift in Sources */,
+				ACA023B5C7ABDCB774A29F9B /* SessionsFeatureTests.swift in Sources */,
+				5DA059A95AEE53F8E6F69C8A /* TestRPCWebSocket.swift in Sources */,
+				F8906A4476147FF41E82974D /* WorkspacePersistenceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,13 +474,29 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		217EC5306FEE558134F5EA19 /* AgentsMobileCore */ = {
+		2BAB288068D240AD636CE8E0 /* AppFeature */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = AgentsMobileCore;
+			productName = AppFeature;
 		};
-		D21B8FA7515D97DDFA18FE07 /* AgentsMobileCore */ = {
+		453577FA71E47F64A803DA0D /* AppFeature */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = AgentsMobileCore;
+			productName = AppFeature;
+		};
+		8A2B94F92B1E0C9CB639CA61 /* Database */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Database;
+		};
+		8E1C8007C755436CFBE031FA /* ConnectionFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ConnectionFeature;
+		};
+		DA061594DFDC92F3EAD0FF5C /* ClientModels */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ClientModels;
+		};
+		E754E5F4558AAF58D6B9279D /* RPCClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RPCClient;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

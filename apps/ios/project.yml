@@ -19,7 +19,7 @@ targets:
       - path: App
     dependencies:
       - package: AgentsMobilePackage
-        product: AgentsMobileCore
+        product: AppFeature
     info:
       path: Derived/InfoPlists/AgentsMobile-Info.plist
       properties:
@@ -47,10 +47,18 @@ targets:
     platform: iOS
     deploymentTarget: "26.0"
     sources:
-      - path: Tests/AgentsMobileTests
+      - path: Tests
     dependencies:
       - package: AgentsMobilePackage
-        product: AgentsMobileCore
+        product: AppFeature
+      - package: AgentsMobilePackage
+        product: ClientModels
+      - package: AgentsMobilePackage
+        product: ConnectionFeature
+      - package: AgentsMobilePackage
+        product: Database
+      - package: AgentsMobilePackage
+        product: RPCClient
     info:
       path: Derived/InfoPlists/AgentsMobileTests-Info.plist
       properties: {}
